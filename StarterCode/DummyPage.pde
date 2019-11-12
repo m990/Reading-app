@@ -1,9 +1,11 @@
 class DummyPage {
-  private String text;
+  private PImage text;
   private PImage pic;
+  private color c;
   
-  public DummyPage(String text, String file) {
-     this.text = text;
-     this.pic = loadImage(file);
+  public DummyPage(String textFile, String picFile, color c) {
+     this.text = loadImage(textFile);
+     this.pic = loadImage(picFile);
+     this.c = c;
   }
 }

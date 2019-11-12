@@ -6,7 +6,8 @@ void setup() {
 }
 
 void draw() {
-  DummyPage[] p = {new DummyPage("text1", "img1")};
+
+  DummyPage[] p = {new DummyPage("text1.png", "img1.png", color(255, 255, 255))};
   book = new DummyBook("Test", 1, p);
   w = new Window(book);
   
