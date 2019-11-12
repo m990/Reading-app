@@ -1,7 +1,7 @@
 class Page {
   
   String text;
-  PImage illustration;
+  PImage illustration; 
   int pageNumber;
   
   
