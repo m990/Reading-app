@@ -4,6 +4,12 @@ class Page {
   PImage illustration; 
   int pageNumber;
   
+  Page(String text, PImage illustration, int pageNumber){
+    this.text = text;
+    this.illustration = illustration;
+    this.pageNumber = pageNumber;
+  }
+  
   
   // Getters and setters -- text
   String getText() {
