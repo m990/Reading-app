@@ -9,11 +9,10 @@ class Window {
     //displays p's data and cBook's title
     //p's data is the text and image
     background(p.c);
-    p.text.resize(75, 75);
     p.pic.resize(100, 100);
-    image(p.text, 225, 425);
     image(p.pic, 225, 50);
-    
+   
+
     //universal shapes for every page
     noStroke();
     fill(192, 192, 192);
@@ -25,7 +24,12 @@ class Window {
     textSize(32);
     fill(50, 50, 50);
     text(cBook.getTitle(), 225, 25);
-    
+   
+    //page text
+    textSize(500/p.text.length());
+    fill(0, 102, 153);
+    text(p.text, 250-p.text.length(), 490-(2*p.text.length()/3));
+   
     //back and forth arrows (visible dependent on page)
     //i.e. on page 1, no back arrow, on last page, no forward arrow
     stroke(0, 0, 0);
