@@ -23,6 +23,9 @@ class Book {
   void setTitle(String newTitle) {
    title = newTitle; 
   }
+  PImage getImage(){
+    return cover;
+  }
   
   ArrayList<Page> getPages() {
     return pages;
