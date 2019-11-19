@@ -1,11 +1,26 @@
 class Window {
   DummyBook cBook;
   
+  boolean buttonOver;
+  color buttonColor;
+  color buttonHighlight;
   public Window(DummyBook b) {
     cBook = b;
+    
+    buttonColor = color(193, 193, 193);
+    buttonHighlight = color(96, 96, 96);
+    buttonOver = true;
   }
   
   void display(DummyPage p) {
+    int buttonWidth = width/15;
+    int buttonHeight = height/5;
+    int buttonX = width/50;
+    int button2X = width-buttonWidth-width/50;
+    int buttonY = height/2-buttonHeight+width/25;
+    
+    update();
+    
     //displays p's data and cBook's title
     //p's data is the text and image
     background(p.c);
@@ -32,26 +47,50 @@ class Window {
     fill(192, 192, 192);
     boolean forward = true;
     boolean back = true;
-    if(cBook.getCurPage() == 1) {
+    if(cBook.getCurPage() == 0) {
        back = false;
     }
     if(cBook.getCurPage() == cBook.getTotalPages()) {
-       forward = false;
+       forward = true;
     }
     //currently won't display arrows because there is only 1 page
     //add interaction when clicking arrow
     //^ should set currentpage of book to cur+1
     //call display again
     if(back) {
-       triangle(10, 455/2, 45, 125, 45, 330);
+       if(buttonOver) {
+        fill(buttonHighlight);
+        triangle(buttonX, buttonY+(buttonHeight/2), buttonX+buttonWidth, buttonY+buttonHeight, buttonX+buttonWidth, buttonY);
+      } else {
+        fill(buttonColor);
+        triangle(buttonX, buttonY+(buttonHeight/2), buttonX+buttonWidth, buttonY+buttonHeight, buttonX+buttonWidth, buttonY);  
+     }
     }
     if(forward) {
-       triangle(490, 455/2, 455, 125, 455, 330);  
+      if(buttonOver) {
+        fill(buttonHighlight);
+        triangle(button2X, buttonY, button2X, buttonY+buttonHeight, button2X+buttonWidth, buttonY+(buttonHeight/2));
+      } else {
+        fill(buttonColor);
+        triangle(button2X, buttonY, button2X, buttonY+buttonHeight, button2X+buttonWidth, buttonY+(buttonHeight/2));  
+     }
     }
     
     //add home button
-    
   }
   
+  void mousePressed() {
+    if(buttonOver) {
+      //process click 
+    }
+  }
+  
+  void update() {
+    if(get(mouseX, mouseY) == buttonColor || get(mouseX, mouseY) == buttonHighlight) {
+      buttonOver = true;
+    } else {
+      buttonOver = false;
+    }
+  }
   //add actionlistener to advance to next page
 }
