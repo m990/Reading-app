@@ -3,8 +3,8 @@ class DummyPage {
   private PImage pic;
   private color c;
   
-  public DummyPage(String textFile, String picFile, color c) {
-     this.text = textFile;
+  public DummyPage(String text, String picFile, color c) {
+     this.text = text;
      this.pic = loadImage(picFile);
      this.c = c;
   }
