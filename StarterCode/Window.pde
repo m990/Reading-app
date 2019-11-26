@@ -57,9 +57,9 @@ class Window {
     text(cBook.getTitle(), 225, 25);
    
     //page text
-    textSize(500/p.text.length());
+    textSize(125/sqrt(p.text.length()));
     fill(0, 102, 153);
-    text(p.text, 250-p.text.length(), 490-(2*p.text.length()/3));
+    text(p.text, 75-p.text.length(), 490-p.text.length());
    
     //back and forth arrows (visible dependent on page)
     //i.e. on page 1, no back arrow, on last page, no forward arrow
