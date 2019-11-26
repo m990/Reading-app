@@ -8,7 +8,7 @@ void setup() {
 
 void draw() {
 
-  DummyPage[] p = {new DummyPage("I ran.", "img1.png", color(255, 255, 255))};
+  DummyPage[] p = {new DummyPage("Min aka Stal-min", "img1.png", color(255, 255, 255))};
   book = new DummyBook("Test", 1, p);
   w = new Window(book);
   
