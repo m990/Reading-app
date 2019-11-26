@@ -3,28 +3,16 @@ class Book {
   
   String title;
   ArrayList<Page> pages;
-  PImage cover;
-   
-  Book (String title, ArrayList<Page> pages, PImage cover){
+    Book (String title, ArrayList<Page> pages){
     this.title = title;
     this.pages = pages;
-    this.cover = cover;
   }
-  // Getters and setters
-  PImage getCover() {
-   return cover; 
-  }
-  void setCover(PImage cover){
-   this.cover = cover;
-  }
+  // Getters and setters 
   String getTitle() {
    return title; 
   }
   void setTitle(String newTitle) {
    title = newTitle; 
-  }
-  PImage getImage(){
-    return cover;
   }
   
   ArrayList<Page> getPages() {

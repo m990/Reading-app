@@ -1,10 +1,10 @@
 class Window {
-  DummyBook cBook;
+  Book cBook;
   
   boolean buttonOver;
   color buttonColor;
   color buttonHighlight;
-  public Window(DummyBook b) {
+  public Window(Book b) {
     cBook = b;
     
     buttonColor = color(193, 193, 193);
@@ -12,7 +12,7 @@ class Window {
     buttonOver = true;
   }
   
-  void display(DummyPage p) {
+  void display(Page p) {
     int buttonWidth = width/15;
     int buttonHeight = height/5;
     int buttonX = width/50;
@@ -24,8 +24,8 @@ class Window {
     //displays p's data and cBook's title
     //p's data is the text and image
     background(p.c);
-    p.pic.resize(100, 100);
-    image(p.pic, 225, 50);
+    p.illustration.resize(100, 100);
+    image(p.illustration, 225, 50);
    
 
     //universal shapes for every page
@@ -51,10 +51,10 @@ class Window {
     fill(192, 192, 192);
     boolean forward = true;
     boolean back = true;
-    if(cBook.getCurPage() == 0) {
+    if(p.getPageNumber() == 0) {
        back = false;
     }
-    if(cBook.getCurPage() == cBook.getTotalPages()) {
+    if(p.getPageNumber() == cBook.getPages().size()-1) {
        forward = true;
     }
     //currently won't display arrows because there is only 1 page
