@@ -3,11 +3,13 @@ class Page {
   String text;
   PImage illustration; 
   int pageNumber;
+  color c;
   
   Page(String text, PImage illustration, int pageNumber){
     this.text = text;
     this.illustration = illustration;
     this.pageNumber = pageNumber;
+    
   }
   
   
