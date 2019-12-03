@@ -37,11 +37,11 @@ class Library {
     int counterX = 0;
     int counterY = 0;
     for (Book b: books){
-      PImage image = b.getImage();
+      PImage image = b.getCoverImg();
       // See discord for width/height specs
-      double w = (double)width*(.2);
-      double h = (double)height*(.25);
-      image.resize((int)w, (int)h);
+      //double w = (double)width*(.2);
+      //double h = (double)height*(.25);
+      image.resize(100, 100);
       // First image's x location:
       double firstImgX = (double)width / (double)40;
       double firstImgY = (double)100 + (double)height / (double)40;
