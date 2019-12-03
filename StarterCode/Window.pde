@@ -35,26 +35,25 @@ class Window {
   
   void draw() {
     update();
-    mousePressed();
     
     //displays p's data and cBook's title
     //p's data is the text and image
     background(p.c);
-    p.pic.resize(100, 100);
-    image(p.pic, 225, 50);
-   
+    p.pic.resize(height*79/100, height*79/100);
+    image(p.pic, buttonX+buttonWidth+width/25, height*3/50);
+    
 
     //universal shapes for every page
     noStroke();
     fill(192, 192, 192);
-    rect(0, 0, 500, 30);
-    rect(0, 425, 500, 75);
+    rect(0, 0, width, height*3/50);
+    rect(0, height*17/20, width, height*3/20);
     
     //title text
     surface.setTitle("Book: "+cBook.getTitle());
     textSize(32);
     fill(50, 50, 50);
-    text(cBook.getTitle(), 225, 25);
+    text(cBook.getTitle(), width/2-(width/20), height/20);
    
     //page text
     textSize(125/sqrt(p.text.length()));
@@ -73,6 +72,7 @@ class Window {
     if(cBook.getCurPage() == cBook.getTotalPages()) {
        forward = false;
     }
+    
     //currently won't display arrows because there is only 1 page
     //add interaction when clicking arrow
     //^ should set currentpage of book to cur+1
@@ -81,21 +81,20 @@ class Window {
       if(!buttonClicked) {
         fill(buttonColor);
         triangle(buttonX, buttonY+(buttonHeight/2), buttonX+buttonWidth, buttonY+buttonHeight, buttonX+buttonWidth, buttonY);
-      } else if(buttonOver && buttonClicked) {
+      } else {
         fill(buttonHighlight);
         triangle(buttonX, buttonY+(buttonHeight/2), buttonX+buttonWidth, buttonY+buttonHeight, buttonX+buttonWidth, buttonY);
-        updatePage(0);
+        //updatePage(0);
       }
     }
     if(forward) {
       if(!button2Clicked) {
         fill(button2Color);
         triangle(button2X, buttonY, button2X, buttonY+buttonHeight, button2X+buttonWidth, buttonY+(buttonHeight/2)); 
-      } else if(button2Over && button2Clicked) {
-        
+      } else {
         fill(button2Highlight);
         triangle(button2X, buttonY, button2X, buttonY+buttonHeight, button2X+buttonWidth, buttonY+(buttonHeight/2));
-        updatePage(1);
+        //updatePage(1);
       }
        
     }
@@ -104,12 +103,20 @@ class Window {
   }
   
   void mousePressed() {
-    System.out.println("hi");
     if(buttonOver) {
       buttonClicked = true; 
-    } else if (button2Over) {
-      System.out.println("forward click");
+    } else if (button2Over) { //<>//
       button2Clicked = true; 
+    }
+  }
+  void mouseReleased() {
+    if(buttonOver) {
+      buttonClicked = false; 
+      updatePage(0);
+    }
+    if(button2Over) {
+      button2Clicked = false;
+      updatePage(1);
     }
   }
   
@@ -130,11 +137,9 @@ class Window {
   
   void update() {
     if(get(mouseX, mouseY) == buttonColor || get(mouseX, mouseY) == buttonHighlight) {
-      //System.out.println("--");
       buttonOver = true;
       button2Over = false;
     } else if(get(mouseX, mouseY) == button2Color || get(mouseX, mouseY) == button2Highlight) {
-      System.out.println("--");
       button2Over = true;
       buttonOver = false;
     } 
