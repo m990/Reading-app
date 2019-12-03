@@ -38,8 +38,9 @@ class Window {
     
     //displays p's data and cBook's title
     //p's data is the text and image
+    //button2X-width/25
     background(p.c);
-    p.pic.resize(height*79/100, height*79/100);
+    p.pic.resize(button2X-(width/25)-buttonX-buttonWidth-width/25, height*79/100);
     image(p.pic, buttonX+buttonWidth+width/25, height*3/50);
     
 
