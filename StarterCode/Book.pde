@@ -1,31 +1,34 @@
-class DummyBook {
+class Book {
  private String title;
  private int nPages;
  //current page object
- private DummyPage currentPage;
+ private Page currentPage;
  //current page #
  private int curPageN;
+ private PImage coverImg;
  
- DummyPage[] pages = new DummyPage[nPages];
- 
- public DummyBook(String title, int nPages, DummyPage[] pages) {
+ private Page[] pages;
+
+ public Book(String title, int nPages, Page[] pages, String coverFile) {
    if(pages.length != nPages) {
      System.out.println("Page number mismatch");
    }
    
+   this.pages = pages;
    this.title = title;
    this.nPages = nPages;
    this.pages = pages;
    currentPage = pages[0];
    curPageN = 1;
- }
- 
- public DummyPage getCurrentPage() {
-   return currentPage;
+   coverImg = loadImage(coverFile);
  }
  
  public String getTitle() {
    return title;
+ }
+ 
+ public Page getCurrentPage() {
+   return currentPage;
  }
  
  public int getCurPage() {
@@ -40,5 +43,7 @@ class DummyBook {
    return nPages; 
  }
  
- 
+ public PImage getCoverImg() {
+   return coverImg;
+ }
 }

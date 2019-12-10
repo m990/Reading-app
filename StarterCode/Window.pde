@@ -1,12 +1,13 @@
 class Window {
-  DummyBook cBook;
-  DummyPage p;
+  Book cBook;
+  Page cPage;
   
   boolean buttonOver;
-  boolean button2Over;
   color buttonColor;
-  color button2Color;
   color buttonHighlight;
+  
+  boolean button2Over;
+  color button2Color;
   color button2Highlight;
   
   int buttonWidth = width/15;
@@ -18,14 +19,16 @@ class Window {
   boolean buttonClicked;
   boolean button2Clicked;
   
-  public Window(DummyBook b) {
+  public Window(Book b) {
     cBook = b;
-    p = cBook.pages[cBook.getCurPage()-1];
+    cPage = cBook.pages[cBook.getCurPage()-1];
     
     buttonColor = color(193, 193, 193);
     button2Color = color(194, 194, 194);
+    
     buttonHighlight = color(96, 96, 96);
     button2Highlight = color(97, 97, 97);
+    
     buttonOver = false;
     button2Over = false;
     
@@ -34,15 +37,14 @@ class Window {
   }
   
   void draw() {
-    update();
+    
     
     //displays p's data and cBook's title
     //p's data is the text and image
     //button2X-width/25
-    background(p.c);
-    p.pic.resize(button2X-(width/25)-buttonX-buttonWidth-width/25, height*79/100);
-    image(p.pic, buttonX+buttonWidth+width/25, height*3/50);
-    
+    background(cPage.bgColor);
+    cPage.illustration.resize(button2X-(width/25)-buttonX-buttonWidth-width/25, height*79/100);
+    image(cPage.illustration, buttonX+buttonWidth+width/25, height*3/50);
 
     //universal shapes for every page
     noStroke();
@@ -52,32 +54,29 @@ class Window {
     
     //title text
     surface.setTitle("Book: "+cBook.getTitle());
-    textSize(32);
+    textSize(60/sqrt(cBook.getTitle().length()));
     fill(50, 50, 50);
     text(cBook.getTitle(), width/2-(width/20), height/20);
    
     //page text
-    textSize(125/sqrt(p.text.length()));
+    textSize(125/sqrt(cPage.text.length()));
     fill(0, 102, 153);
-    text(p.text, 75-p.text.length(), 490-p.text.length());
+    text(cPage.text, (width*3/20)-cPage.text.length(), (height*490/500)-cPage.text.length());
    
     //back and forth arrows (visible dependent on page)
     //i.e. on page 1, no back arrow, on last page, no forward arrow
-    stroke(0, 0, 0);
-    fill(192, 192, 192);
     boolean forward = true;
     boolean back = true;
-    if(cBook.getCurPage() == 1) {
+    if(cBook.getCurPage() == 1) { //maybe implement title page to remove 0-based indexing
        back = false;
     }
     if(cBook.getCurPage() == cBook.getTotalPages()) {
        forward = false;
     }
     
-    //currently won't display arrows because there is only 1 page
-    //add interaction when clicking arrow
-    //^ should set currentpage of book to cur+1
-    //call display again
+    //displaying buttons
+    stroke(0, 0, 0);
+    fill(192, 192, 192);
     if(back) {
       if(!buttonClicked) {
         fill(buttonColor);
@@ -85,7 +84,6 @@ class Window {
       } else {
         fill(buttonHighlight);
         triangle(buttonX, buttonY+(buttonHeight/2), buttonX+buttonWidth, buttonY+buttonHeight, buttonX+buttonWidth, buttonY);
-        //updatePage(0);
       }
     }
     if(forward) {
@@ -95,11 +93,9 @@ class Window {
       } else {
         fill(button2Highlight);
         triangle(button2X, buttonY, button2X, buttonY+buttonHeight, button2X+buttonWidth, buttonY+(buttonHeight/2));
-        //updatePage(1);
       }
-       
     }
-    
+    update();
     //add home button
   }
   
@@ -127,12 +123,12 @@ class Window {
       //process click 
       //back
       cBook.setCurPage(cBook.getCurPage()-1);
-      p = cBook.pages[cBook.getCurPage()-1];
+      cPage = cBook.pages[cBook.getCurPage()-1];
     } else {
       //process click
       //forward
       cBook.setCurPage(cBook.getCurPage()+1);
-      p = cBook.pages[cBook.getCurPage()-1];
+      cPage = cBook.pages[cBook.getCurPage()-1];
     }
   }
   
@@ -143,11 +139,9 @@ class Window {
     } else if(get(mouseX, mouseY) == button2Color || get(mouseX, mouseY) == button2Highlight) {
       button2Over = true;
       buttonOver = false;
-    } 
-    else {
+    } else {
       buttonOver = false;
       button2Over = false;
     }
   }
-  //add actionlistener to advance to next page
 }
