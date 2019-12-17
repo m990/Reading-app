@@ -10,9 +10,15 @@ void setup() {
   Book b2 = new Book("Test2", 2, p, cover2);
   
   l = new Library();
-  l.addBook(b1);
-  l.addBook(b2);
   w = new Window(b1);
+  background(0, 0, 0);
+  for(int i = 0; i<34; i++){
+       if( (int)Math.sqrt(i)%2 ==0 ){
+            l.addBook(new Book("La Edad de Oro", 2, p, cover1));
+       }else{
+            l.addBook(new Book("El Presidio Político en Cuba", 2, p, cover2));
+       }
+  }
 }
 
 void draw() {
@@ -25,7 +31,7 @@ void draw() {
 }
 
 void mousePressed() {
-  w.mousePressed();           //<>//
+  w.mousePressed();
 }
 
 void mouseReleased() {
