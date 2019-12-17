@@ -1,25 +1,35 @@
 class Window {
+  Library l;
+  
   Book cBook;
   Page cPage;
   
-  boolean buttonOver;
   color buttonColor;
   color buttonHighlight;
-  
-  boolean button2Over;
   color button2Color;
   color button2Highlight;
   
-  int buttonWidth = width/15;
-  int buttonHeight = height/5;
-  int buttonX = width/50;
-  int button2X = width-buttonWidth-width/50;
-  int buttonY = height/2-buttonHeight+width/25;
+  float buttonWidth = width/15;
+  float buttonHeight = height/5;
+  float buttonX = width/50;
+  float button2X = width-buttonWidth-width/50;
+  float buttonY = height/2-buttonHeight+width/25;
+  float homeX = width/100;
+  float homeY = height/100;
+  float homeWidth = width/25;
+  float homeHeight = height/25;
   
+  boolean buttonOver;
+  boolean button2Over;
   boolean buttonClicked;
   boolean button2Clicked;
+  boolean homeOver;
+  boolean homeClicked;
+  
+  PImage homeIcon;
   
   public Window(Book b) {
+    l = new Library();
     cBook = b;
     cPage = cBook.pages[cBook.getCurPage()-1];
     
@@ -31,19 +41,21 @@ class Window {
     
     buttonOver = false;
     button2Over = false;
+    homeOver = false;
     
     buttonClicked = false;
     button2Clicked = false;
+    homeClicked = false;
+    
+    homeIcon = loadImage("homeicon.png");
   }
   
   void draw() {
-    
-    
     //displays p's data and cBook's title
     //p's data is the text and image
     //button2X-width/25
     background(cPage.bgColor);
-    cPage.illustration.resize(button2X-(width/25)-buttonX-buttonWidth-width/25, height*79/100);
+    cPage.illustration.resize((int)(button2X-(width/25)-buttonX-buttonWidth-width/25), (int)height*79/100);
     image(cPage.illustration, buttonX+buttonWidth+width/25, height*3/50);
 
     //universal shapes for every page
@@ -95,15 +107,34 @@ class Window {
         triangle(button2X, buttonY, button2X, buttonY+buttonHeight, button2X+buttonWidth, buttonY+(buttonHeight/2));
       }
     }
+    //home button
+    if(!homeClicked) {
+      fill(#4a4444);
+    } else {
+      fill(#363232);
+    }
+    rect((float) width/100, (float) height/100, (float) width/25, (float) height/25);
+    homeIcon.resize(width/25, height/25);
+    image(homeIcon, homeX, homeY);
+    
     update();
-    //add home button
   }
   
   void mousePressed() {
     if(buttonOver) {
       buttonClicked = true; 
-    } else if (button2Over) { //<>//
+    } else { //<>//
+      buttonClicked = false; 
+    }
+    if(button2Over) {
       button2Clicked = true; 
+    } else {
+      button2Clicked = false; 
+    }
+    if(homeOver) {
+      homeClicked = true; 
+    } else {
+      homeClicked = false; 
     }
   }
   void mouseReleased() {
@@ -114,6 +145,11 @@ class Window {
     if(button2Over) {
       button2Clicked = false;
       updatePage(1);
+    }
+    if(homeOver) {
+      homeClicked = false;
+      //have functionality to return to library
+      l.drawLibrary();
     }
   }
   
@@ -142,6 +178,12 @@ class Window {
     } else {
       buttonOver = false;
       button2Over = false;
+    }
+    if(homeX <= mouseX && mouseX <= homeX+homeWidth && 
+       homeY <= mouseY && mouseY <= homeY+homeHeight) {
+      homeOver = true;
+    } else {
+      homeOver = false;
     }
   }
 }
