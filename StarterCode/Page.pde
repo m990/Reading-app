@@ -1,40 +1,27 @@
 class Page {
+  private String text;
+  private PImage illustration; 
+  private color bgColor;
   
-  String text;
-  PImage illustration; 
-  int pageNumber;
-  color c;
-  
-  Page(String text, PImage illustration, int pageNumber){
+  public Page(String text, String pFile, color bgColor){
     this.text = text;
-    this.illustration = illustration;
-    this.pageNumber = pageNumber;
-    
+    this.illustration = loadImage(pFile);
+    this.bgColor = bgColor;
   }
-  
   
   // Getters and setters -- text
-  String getText() {
+  public String getText() {
    return text; 
   }
-  void setText(String newText) {
+  public void setText(String newText) {
    text = newText; 
   }
   
   // Getters and setters -- illustration
-  PImage getIllustration() {
+  public PImage getIllustration() {
    return illustration; 
   }
-  void setIllustration(PImage newImage) {
-   illustration = newImage; 
-  }
-  
-  // Getters and setters -- pageNumber
-  int getPageNumber() {
-   return pageNumber; 
-  }
-  
-  void setPageNumber(int newPage) {
-    pageNumber = newPage;
+  public void setIllustration(String pFile) {
+   illustration = loadImage(pFile); 
   }
 }

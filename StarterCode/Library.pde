@@ -1,11 +1,26 @@
 class Library {
   // is it possible to search? will be determined later but keep it in mind
   ArrayList<Book> books;
+
+  public Library() {
+    books = new ArrayList<Book>();
+    spot = 0;
+    columns = 2;
+    
+    buttonColor = color(193, 193, 193);
+    button2Color = color(194, 194, 194);
+    buttonHighlight = color(96, 96, 96);
+    button2Highlight = color(97, 97, 97);
+    buttonOver = false;
+    button2Over = false;
+    
+    buttonClicked = false;
+    button2Clicked = false;
+  }
   int spot;
   int columns;
-  
-  
-   boolean buttonOver;
+
+  boolean buttonOver;
   boolean button2Over;
   color buttonColor;
   color button2Color;
@@ -15,7 +30,7 @@ class Library {
   boolean buttonClicked;
   boolean button2Clicked;
   
-  Library(ArrayList<Book> books){
+  public Library(ArrayList<Book> books){
     this.books = books;
     spot = 0;
     columns = 2;
@@ -89,8 +104,8 @@ class Library {
     line(0, (int)((double)height/(double)10), width, (int)((double)height/(double)10));
     // Books
     int newHeight = height - (int)((double)height/(double)10);
-    int xOffset = (int) ((double) 1/2 * (double) (width - 285/columns - (((2*columns-1)*428)/columns)));
-    int yOffset = (int)((double)height/(double)10) + (int) ((double) 1/2 * (double) (newHeight - 285/columns -(columns-1)*428/columns));
+    int xOffset = (int) ((double) 1/2 * (double) (width - (double) 285/columns - (((double) (2*columns-1)*428)/columns)));
+    int yOffset = (int)((double)height/10) + (int) ((double) 1/2 * (double) (newHeight - (double) 285/columns - (double) (columns-1)* (double) 428/columns));
     for(int i = 0; i < 8 && 8*spot+i < books.size(); i++){
       PImage cover = books.get(8*spot+i).getCoverImg();
       cover.resize(285/columns, 285/columns);
