@@ -1,9 +1,34 @@
 class Library {
   // is it possible to search? will be determined later but keep it in mind
   ArrayList<Book> books;
+  int spot;
+  int columns;
+  
+  
+   boolean buttonOver;
+  boolean button2Over;
+  color buttonColor;
+  color button2Color;
+  color buttonHighlight;
+  color button2Highlight;
+  
+  boolean buttonClicked;
+  boolean button2Clicked;
   
   Library(ArrayList<Book> books){
     this.books = books;
+    spot = 0;
+    columns = 2;
+    
+    buttonColor = color(193, 193, 193);
+    button2Color = color(194, 194, 194);
+    buttonHighlight = color(96, 96, 96);
+    button2Highlight = color(97, 97, 97);
+    buttonOver = false;
+    button2Over = false;
+    
+    buttonClicked = false;
+    button2Clicked = false;
   }
   ArrayList<Book> getBooks(){
     return books;
@@ -24,6 +49,35 @@ class Library {
   }
   //draws the library
   void drawLibrary(){
+    boolean changed = false;
+    if(8*spot+8<getBooks().size()) {
+      fill(254, 254, 254);
+      if (mousePressed){
+        color c = get(mouseX, mouseY);
+        if (c == color(254, 254, 254)){
+           fill(1, 1, 1);
+           spot++;
+           changed = true;
+        }
+        delay(50);
+      }
+      triangle(0.93*width, 0.45*height, 0.97*width, 0.5*height, 0.93*width, 0.55*height);
+    }
+    if(spot>0) {
+      fill(253, 253, 253);
+      if (mousePressed){
+        color c = get(mouseX, mouseY);
+        if (c == color(253, 253, 253)){
+          fill(50, 50, 50);
+          spot+=-1;
+          changed = true;
+        } 
+      delay(50);
+      }
+      triangle(0.07*width, 0.45*height, 0.03*width, 0.5*height, 0.07*width, 0.55*height);
+      fill(255, 255, 255);
+    }
+    
     // Your library sign
     // 1/30th (1/3 of 1/10 of height)
     textSize((int) ((double)1 / (double)15 * (double)height));
@@ -34,26 +88,17 @@ class Library {
     // Line across screen at 10% down
     line(0, (int)((double)height/(double)10), width, (int)((double)height/(double)10));
     // Books
-    int counterX = 0;
-    int counterY = 0;
-    for (Book b: books){
-      PImage image = b.getImage();
-      // See discord for width/height specs
-      double w = (double)width*(.2);
-      double h = (double)height*(.25);
-      image.resize((int)w, (int)h);
-      // First image's x location:
-      double firstImgX = (double)width / (double)40;
-      double firstImgY = (double)100 + (double)height / (double)40;
-      image(image, (int)((double)firstImgX + (double) counterX * (double) width * (double) 1/4 ), (int)firstImgY);
-      counterX++;
-      if (counterX % 4 == 0){
-        counterX = 0;
-        counterY++;
-      }
+    int newHeight = height - (int)((double)height/(double)10);
+    int xOffset = (int) ((double) 1/2 * (double) (width - 285/columns - (((2*columns-1)*428)/columns)));
+    int yOffset = (int)((double)height/(double)10) + (int) ((double) 1/2 * (double) (newHeight - 285/columns -(columns-1)*428/columns));
+    for(int i = 0; i < 8 && 8*spot+i < books.size(); i++){
+      PImage cover = books.get(8*spot+i).getCoverImg();
+      cover.resize(285/columns, 285/columns);
+        image(cover, xOffset+(i % (2*columns)) * 428/columns, yOffset+(i - (i % (2*columns)))/(2 * columns) * 428/columns);
     }
-    if (counterY %2 == 0){
-      counterY = 0;
+    if(changed == true){
+      background(0,0,0);
+      drawLibrary();
     }
   }
 }
