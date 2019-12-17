@@ -1,11 +1,13 @@
 class Library {
   // is it possible to search? will be determined later but keep it in mind
   ArrayList<Book> books;
+  int currentPage;
 
   public Library() {
     books = new ArrayList<Book>();
     spot = 0;
     columns = 2;
+    currentPage = 0;
     
     buttonColor = color(193, 193, 193);
     button2Color = color(194, 194, 194);
@@ -62,6 +64,9 @@ class Library {
     }
     return null;
   }
+  int getCurrentPage(){
+    return currentPage;
+  }
   //draws the library
   void drawLibrary(){
     boolean changed = false;
@@ -74,6 +79,7 @@ class Library {
            spot++;
            changed = true;
         }
+        currentPage++;
         delay(50);
       }
       triangle(0.93*width, 0.45*height, 0.97*width, 0.5*height, 0.93*width, 0.55*height);
@@ -84,9 +90,10 @@ class Library {
         color c = get(mouseX, mouseY);
         if (c == color(253, 253, 253)){
           fill(50, 50, 50);
-          spot+=-1;
+          spot--;
           changed = true;
         } 
+        currentPage--;
       delay(50);
       }
       triangle(0.07*width, 0.45*height, 0.03*width, 0.5*height, 0.07*width, 0.55*height);
