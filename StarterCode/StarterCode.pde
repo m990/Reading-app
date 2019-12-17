@@ -14,20 +14,16 @@ void setup() {
   background(0, 0, 0);
   for(int i = 0; i<34; i++){
        if( (int)Math.sqrt(i)%2 ==0 ){
-            l.addBook(new Book("La Edad de Oro", 2, p, cover1));
+            l.addBook(b1);
        }else{
-            l.addBook(new Book("El Presidio Político en Cuba", 2, p, cover2));
+            l.addBook(b2);
        }
   }
 }
 
 void draw() {
-  clear();
-  if(keyPressed) {
-   l.drawLibrary();
-  } else {
-    w.draw();
-  }
+  
+  w.draw();
 }
 
 void mousePressed() {
