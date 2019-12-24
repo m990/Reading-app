@@ -46,4 +46,5 @@ class Book {
  public PImage getCoverImg() {
    return coverImg;
  }
+ 
 }

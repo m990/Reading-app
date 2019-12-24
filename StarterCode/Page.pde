@@ -2,11 +2,19 @@ class Page {
   private String text;
   private PImage illustration; 
   private color bgColor;
+  private Audio audio;
   
   public Page(String text, String pFile, color bgColor){
     this.text = text;
     this.illustration = loadImage(pFile);
     this.bgColor = bgColor;
+  }
+  
+  public Page(String text, String pFile, color bgColor, String audioPath){
+    this.text = text;
+    this.illustration = loadImage(pFile);
+    this.bgColor = bgColor;
+    audio = new Audio(audioPath);
   }
   
   // Getters and setters -- text
@@ -23,5 +31,20 @@ class Page {
   }
   public void setIllustration(String pFile) {
    illustration = loadImage(pFile); 
+  }
+  
+  // Getter for audio
+  Audio getAudio() {
+   return audio; 
+  }
+  void stopSound() {
+   if (audio != null) {
+     audio.endSound();
+   }
+  }
+  void playSound() {
+   if (audio != null) {
+    audio.startSound(); 
+   }
   }
 }
