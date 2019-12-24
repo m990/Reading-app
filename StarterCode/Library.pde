@@ -7,7 +7,7 @@ class Library {
     books = new ArrayList<Book>();
     spot = 0;
     columns = 2;
-    currentPage = 0;
+    currentPage = 1;
     
     buttonColor = color(193, 193, 193);
     button2Color = color(194, 194, 194);

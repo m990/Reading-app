@@ -36,7 +36,7 @@ class Window {
     button2Clicked = false;
   }
   
-  void draw() {
+  void drawWindow() {
     
     
     //displays p's data and cBook's title
@@ -97,6 +97,9 @@ class Window {
     }
     update();
     //add home button
+  }
+  void setBook(Book book){
+    cBook = book;
   }
   
   void mousePressed() {
