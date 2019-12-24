@@ -10,11 +10,11 @@ class Audio {
  }
  
  // Methods
- void playSound() {
+ void startSound() {
    soundFile.play();
  }
  
- void stopSound() {
+ void endSound() {
   soundFile.stop(); 
  }
 }

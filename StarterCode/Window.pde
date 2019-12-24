@@ -1,4 +1,4 @@
-class Window {
+class Window { //<>//
   Book cBook;
   Page cPage;
   
@@ -15,6 +15,8 @@ class Window {
   int buttonX = width/50;
   int button2X = width-buttonWidth-width/50;
   int buttonY = height/2-buttonHeight+width/25;
+  
+  boolean hasPlayedFirstSound = false;
   
   boolean buttonClicked;
   boolean button2Clicked;
@@ -52,6 +54,11 @@ class Window {
     rect(0, 0, width, height*3/50);
     rect(0, height*17/20, width, height*3/20);
     
+    // play first sound
+    if (!hasPlayedFirstSound) {
+     hasPlayedFirstSound = true;
+     cPage.getAudio().startSound();
+    }
     //title text
     surface.setTitle("Book: "+cBook.getTitle());
     textSize(60/sqrt(cBook.getTitle().length()));
@@ -124,11 +131,17 @@ class Window {
       //back
       cBook.setCurPage(cBook.getCurPage()-1);
       cPage = cBook.pages[cBook.getCurPage()-1];
+      // Play the new sound and stop the old one (-1 because array doesn't start at 1)
+      cBook.pages[cBook.getCurPage()].stopSound();
+      cBook.pages[cBook.getCurPage() - 1].playSound();
     } else {
       //process click
       //forward
       cBook.setCurPage(cBook.getCurPage()+1);
       cPage = cBook.pages[cBook.getCurPage()-1];
+      // Play the new sound and stop the old one
+      cBook.pages[cBook.getCurPage() - 2].stopSound();
+      cBook.pages[cBook.getCurPage() - 1].playSound();
     }
   }
   

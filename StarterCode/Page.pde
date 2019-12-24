@@ -33,5 +33,18 @@ class Page {
    illustration = loadImage(pFile); 
   }
   
-  // TODO add getter/setter (?) for the audio
+  // Getter for audio
+  Audio getAudio() {
+   return audio; 
+  }
+  void stopSound() {
+   if (audio != null) {
+     audio.endSound();
+   }
+  }
+  void playSound() {
+   if (audio != null) {
+    audio.startSound(); 
+   }
+  }
 }
