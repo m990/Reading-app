@@ -28,6 +28,8 @@ class Window {
   
   PImage homeIcon;
   
+  boolean stay;
+  
   public Window(Book b) {
     l = new Library();
     cBook = b;
@@ -48,9 +50,11 @@ class Window {
     homeClicked = false;
     
     homeIcon = loadImage("homeicon.png");
+    
+    stay = true;
   }
   
-  void draw() {
+  void drawWindow() {
     //displays p's data and cBook's title
     //p's data is the text and image
     //button2X-width/25
@@ -138,18 +142,19 @@ class Window {
     }
   }
   void mouseReleased() {
+    buttonClicked = false;
+    button2Clicked = false;
+    homeClicked = false;
     if(buttonOver) {
-      buttonClicked = false; 
       updatePage(0);
     }
     if(button2Over) {
-      button2Clicked = false;
       updatePage(1);
     }
     if(homeOver) {
-      homeClicked = false;
       //have functionality to return to library
-      l.drawLibrary();
+      //l.drawLibrary();
+      stay = false;
     }
   }
   
@@ -185,5 +190,9 @@ class Window {
     } else {
       homeOver = false;
     }
+  }
+  
+  boolean getStay() {
+    return stay;
   }
 }
