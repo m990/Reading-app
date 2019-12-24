@@ -22,8 +22,12 @@ void setup() {
 }
 
 void draw() {
-  
-  w.draw();
+  if(w.getStay()) {
+    w.drawWindow();
+  } else {
+    clear();
+    l.drawLibrary();
+  }
 }
 
 void mousePressed() {
