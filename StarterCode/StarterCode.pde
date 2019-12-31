@@ -4,8 +4,8 @@ void setup() {
   size(500, 500);
   String cover1 = "Art Example Two.png";
   String cover2 = "Art Example Three.png";
-  
-  Page[] p = {new Page("I ran.", "pixil-frame-0.png", color(255, 255, 255)), new Page("I ran2.", "img2.png", color(255, 255, 255))};
+
+  Page[] p = {new Page("Rush is a Canadian band that averages a score of 7.500.", "pixil-frame-0.png", color(255, 255, 255), "rush.wav"), new Page("This score falls behind Taylor Swift by a full tenth.", "img2.png", color(255, 255, 255), "taylor swift.wav")};
   Book b1 = new Book("Test", 2, p, cover1);
   Book b2 = new Book("Test2", 2, p, cover2);
   
@@ -22,8 +22,12 @@ void setup() {
 }
 
 void draw() {
-  
-  w.draw();
+  if(w.getStay()) {
+    w.drawWindow();
+  } else {
+    clear();
+    l.drawLibrary();
+  }
 }
 
 void mousePressed() {
