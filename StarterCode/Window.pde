@@ -9,14 +9,7 @@ class Window {
   color button2Color;
   color button2Highlight;
   
-<<<<<<< HEAD
-  int buttonWidth = width/15;
-  int buttonHeight = height/5;
-  int buttonX = width/50;
-  int button2X = width-buttonWidth-width/50;
-  int buttonY = height/2-buttonHeight+width/25;
   int firstPage;
-=======
   float buttonWidth = width/15;
   float buttonHeight = height/5;
   float buttonX = width/50;
@@ -26,9 +19,7 @@ class Window {
   float homeY = height/100;
   float homeWidth = width/25;
   float homeHeight = height/25;
->>>>>>> 19ee41d35cf63db38f3fe49b08c9cf1afb811888
   
-
   boolean hasPlayedFirstSound = false;
 
   boolean buttonOver;
@@ -45,12 +36,9 @@ class Window {
   
   Statistics stat;
   public Window(Book b) {
-<<<<<<< HEAD
     firstPage = 1;
     stat = new Statistics();
-=======
     l = new Library();
->>>>>>> 19ee41d35cf63db38f3fe49b08c9cf1afb811888
     cBook = b;
     cPage = cBook.pages[cBook.getCurPage()-1];
     
@@ -114,7 +102,7 @@ class Window {
        forward = false;
        stat.numBooksRead++;
     }
-    
+     //<>//
     //displaying buttons
     stroke(0, 0, 0);
     fill(192, 192, 192);
