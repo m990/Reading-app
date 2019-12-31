@@ -5,9 +5,9 @@ void setup() {
   String cover1 = "Art Example Two.png";
   String cover2 = "Art Example Three.png";
 
-  Page[] p = {new Page("Rush is a Canadian band that averages a score of 7.500.", "pixil-frame-0.png", color(255, 255, 255), "rush.wav"), new Page("This score falls behind Taylor Swift by a full tenth.", "img2.png", color(255, 255, 255), "taylor swift.wav")};
-  Book b1 = new Book("Test", 2, p, cover1);
-  Book b2 = new Book("Test2", 2, p, cover2);
+  Page[] examplePages = {new Page("Access books in your library.", "Centered? User Guide Title.png", color(255, 255, 255)), new Page("Switch pages by using the side arrows.", "Centered? User Guide Title.png", color(255, 255, 255)), new Page("Return to the library by clicking exit.", "Centered? User Guide Title.png", color(255, 255, 255))};
+  Book b1 = new Book("Test", 3, examplePages, cover1);
+  Book b2 = new Book("Test2", 3, examplePages, cover2);
   
   l = new Library();
   w = new Window(b1);
