@@ -1,9 +1,14 @@
+import java.util.*;
+
 class Library {
   // is it possible to search? will be determined later but keep it in mind
-  ArrayList<Book> books;
+  //ArrayList<Book> books;
+  //key is title
+  TreeMap<String, Book> books;
 
   public Library() {
-    books = new ArrayList<Book>();
+    //books = new ArrayList<Book>();
+    books = new TreeMap<String, Book>();
     spot = 0;
     columns = 2;
     
@@ -30,7 +35,7 @@ class Library {
   boolean buttonClicked;
   boolean button2Clicked;
   
-  public Library(ArrayList<Book> books){
+  public Library(TreeMap<String, Book> books){
     this.books = books;
     spot = 0;
     columns = 2;
@@ -45,22 +50,14 @@ class Library {
     buttonClicked = false;
     button2Clicked = false;
   }
-  ArrayList<Book> getBooks(){
+  TreeMap<String, Book> getBooks(){
     return books;
   }
   void addBook(Book b){
-    books.add(b);
+    books.put(b.getTitle(), b);
   }
-  Book getBook(int bookNumber){
-    return books.get(bookNumber);
-  }
-  Book getBookWithName(String bookName) {
-    for (Book b:books) {
-      if (b.getTitle().equals(bookName)) {
-        return b; 
-      }
-    }
-    return null;
+  Book getBook(String bookName) {
+    return books.get(bookName);
   }
   //draws the library
   void drawLibrary(){
@@ -106,12 +103,14 @@ class Library {
     int newHeight = height - (int)((double)height/(double)10);
     int xOffset = (int) ((double) 1/2 * (double) (width - (double) 285/columns - (((double) (2*columns-1)*428)/columns)));
     int yOffset = (int)((double)height/10) + (int) ((double) 1/2 * (double) (newHeight - (double) 285/columns - (double) (columns-1)* (double) 428/columns));
+    Iterator<Map.Entry<String, Book>> iter = books.entrySet().iterator();
     for(int i = 0; i < 8 && 8*spot+i < books.size(); i++){
-      PImage cover = books.get(8*spot+i).getCoverImg();
+      PImage cover = iter.next().getValue().getCoverImg();
       cover.resize(285/columns, 285/columns);
         image(cover, xOffset+(i % (2*columns)) * 428/columns, yOffset+(i - (i % (2*columns)))/(2 * columns) * 428/columns);
     }
-    if(changed == true){
+    println(books.size());
+    if(changed){
       background(0,0,0);
       drawLibrary();
     }
