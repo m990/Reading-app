@@ -1,3 +1,6 @@
+// Instead of creating a window object with a book, you have a window object and you have a setter that puts in the book later
+// Put all visual stuff inside a second method
+
 Library l;
 Window w;
 Book b1;
@@ -9,8 +12,10 @@ void setup() {
   String cover2 = "Art Example Three.png";
   
   Page[] p = {new Page("I ran.", "pixil-frame-0.png", color(255, 255, 255)), new Page("I ran2.", "img2.png", color(255, 255, 255))};
+  Page[] p2 = {new Page("Text", "Art Example One.png", color(0, 0, 0))};
   b1 = new Book("Test", 2, p, cover1);
-  Book b2 = new Book("Test2", 2, p, cover2);
+  Book b2 = new Book("Test2", 1, p2, cover2);
+  
   w = new Window(b1);
   
   l = new Library();
@@ -27,16 +32,27 @@ void setup() {
   }*/
   l.addBook(b1);
   l.addBook(b1);
-    l.addBook(b1);
+  
+  l.addBook(b2);
+  l.addBook(b2);
+  
   l.addBook(b1);
-    l.addBook(b1);
   l.addBook(b1);
-    l.addBook(b1);
+  
+  l.addBook(b2);
+  l.addBook(b2);
+  
+  l.addBook(b2);
+  l.addBook(b2);
+  
+  l.addBook(b2);
+  l.addBook(b2);
+  
   l.addBook(b1);
-    l.addBook(b1);
   l.addBook(b1);
-    l.addBook(b1);
-  l.addBook(b1);
+  
+  l.addBook(b2);
+  l.addBook(b2);
 }
 
 void draw() {
@@ -46,20 +62,6 @@ void draw() {
   // 221, 239
   //draws the library
   if (inLibrary) l.drawLibrary();
-  if (mousePressed){
-// top left corner button
-  if (mouseX > 78 && mouseX < 214 && mouseY > 99 && mouseY < 241){
-    inLibrary = false;
-    println("top left is pressed");
-    if (currentPage == 1){
-      w.setBook(b1);
-      w.drawWindow();
-    }
-  }
-  if (mouseX > 289 && mouseX < 427 && mouseY > 99 && mouseY < 241) println("button pressed");
-  if (mouseX > 78 && mouseX < 214 && mouseY > 314 && mouseY < 453) println("button pressed");
-  if (mouseX > 289 && mouseX < 427 && mouseY > 314 && mouseY < 453) println("button pressed");
- }
   // draws the book
   //w.draw();
 }

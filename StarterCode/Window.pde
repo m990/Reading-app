@@ -101,6 +101,9 @@ class Window {
   void setBook(Book book){
     cBook = book;
   }
+  Book getBook(){
+    return cBook;
+  }
   
   void mousePressed() {
     if(buttonOver) {
@@ -133,7 +136,7 @@ class Window {
       cBook.setCurPage(cBook.getCurPage()+1);
       cPage = cBook.pages[cBook.getCurPage()-1];
     }
-  }
+  } //<>//
   
   void update() {
     if(get(mouseX, mouseY) == buttonColor || get(mouseX, mouseY) == buttonHighlight) {
@@ -147,4 +150,5 @@ class Window {
       button2Over = false;
     }
   }
+  
 }

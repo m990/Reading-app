@@ -7,7 +7,7 @@ class Library {
     books = new ArrayList<Book>();
     spot = 0;
     columns = 2;
-    currentPage = 1;
+    currentPage = 0;
     
     buttonColor = color(193, 193, 193);
     button2Color = color(194, 194, 194);
@@ -18,6 +18,7 @@ class Library {
     
     buttonClicked = false;
     button2Clicked = false;
+    
   }
   int spot;
   int columns;
@@ -79,10 +80,9 @@ class Library {
            spot++;
            changed = true;
         }
-        currentPage++;
         delay(50);
       }
-      triangle(0.93*width, 0.45*height, 0.97*width, 0.5*height, 0.93*width, 0.55*height);
+      triangle(0.93*width, 0.45*height, 0.97*width, 0.5*height, 0.93*width, 0.55*height); //<>//
     }
     if(spot>0) {
       fill(253, 253, 253);
@@ -93,7 +93,6 @@ class Library {
           spot--;
           changed = true;
         } 
-        currentPage--;
       delay(50);
       }
       triangle(0.07*width, 0.45*height, 0.03*width, 0.5*height, 0.07*width, 0.55*height);
@@ -122,5 +121,28 @@ class Library {
       background(0,0,0);
       drawLibrary();
     }
+      if (mousePressed){
+    // top left corner button
+      if (mouseX > 78 && mouseX < 214 && mouseY > 99 && mouseY < 241){
+        inLibrary = false;
+        println("top left is pressed");
+        /*if (currentPage == 1){
+          w.setBook(books.get(0));
+          w.drawWindow();
+        }*/
+        ArrayList<Book> topLeftBooks = new ArrayList<Book>();
+        for (int i = 0; i < books.size(); i++){
+          if (i % 4 == 0){
+            topLeftBooks.add(books.get(i));
+          }
+        }
+        println ("Current page: " + currentPage);
+        w.setBook(topLeftBooks.get(currentPage));
+        w.drawWindow();
+      }
+      if (mouseX > 289 && mouseX < 427 && mouseY > 99 && mouseY < 241) println("button pressed");
+      if (mouseX > 78 && mouseX < 214 && mouseY > 314 && mouseY < 453) println("button pressed");
+      if (mouseX > 289 && mouseX < 427 && mouseY > 314 && mouseY < 453) println("button pressed");
+     }
   }
 }
