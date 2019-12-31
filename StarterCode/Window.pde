@@ -15,11 +15,15 @@ class Window {
   int buttonX = width/50;
   int button2X = width-buttonWidth-width/50;
   int buttonY = height/2-buttonHeight+width/25;
+  int firstPage;
   
   boolean buttonClicked;
   boolean button2Clicked;
   
+  Statistics stat;
   public Window(Book b) {
+    firstPage = 1;
+    stat = new Statistics();
     cBook = b;
     cPage = cBook.pages[cBook.getCurPage()-1];
     
@@ -72,6 +76,7 @@ class Window {
     }
     if(cBook.getCurPage() == cBook.getTotalPages()) {
        forward = false;
+       stat.numBooksRead++;
     }
     
     //displaying buttons
@@ -98,7 +103,7 @@ class Window {
     update();
     //add home button
   }
-  
+
   void mousePressed() {
     if(buttonOver) {
       buttonClicked = true; 
@@ -110,10 +115,12 @@ class Window {
     if(buttonOver) {
       buttonClicked = false; 
       updatePage(0);
+      stat.numPagesRead--;
     }
     if(button2Over) {
       button2Clicked = false;
       updatePage(1);
+      stat.numPagesRead++;
     }
   }
   
@@ -131,7 +138,12 @@ class Window {
       cPage = cBook.pages[cBook.getCurPage()-1];
     }
   }
-  
+  public int ReadPages(){
+    return stat.PagesRead();
+  }
+  public int ReadBooks(){
+    return stat.BooksRead();
+  }
   void update() {
     if(get(mouseX, mouseY) == buttonColor || get(mouseX, mouseY) == buttonHighlight) {
       buttonOver = true;
