@@ -9,6 +9,7 @@ class Window {
   color button2Color;
   color button2Highlight;
   
+  int firstPage;
   float buttonWidth = width/15;
   float buttonHeight = height/5;
   float buttonX = width/50;
@@ -19,7 +20,6 @@ class Window {
   float homeWidth = width/25;
   float homeHeight = height/25;
   
-
   boolean hasPlayedFirstSound = false;
 
   boolean buttonOver;
@@ -34,7 +34,10 @@ class Window {
   
   boolean stay;
   
+  Statistics stat;
   public Window(Book b) {
+    firstPage = 1;
+    stat = new Statistics();
     l = new Library();
     cBook = b;
     cPage = cBook.pages[cBook.getCurPage()-1];
@@ -97,8 +100,9 @@ class Window {
     }
     if(cBook.getCurPage() == cBook.getTotalPages()) {
        forward = false;
+       stat.numBooksRead++;
     }
-    
+     //<>//
     //displaying buttons
     stroke(0, 0, 0);
     fill(192, 192, 192);
@@ -132,7 +136,7 @@ class Window {
     
     update();
   }
-  
+
   void mousePressed() {
     if(buttonOver) {
       buttonClicked = true; 
@@ -156,9 +160,11 @@ class Window {
     homeClicked = false;
     if(buttonOver) {
       updatePage(0);
+      stat.numPagesRead--;
     }
     if(button2Over) {
       updatePage(1);
+      stat.numPagesRead++;
     }
     if(homeOver) {
       //have functionality to return to library
@@ -187,7 +193,12 @@ class Window {
       cBook.pages[cBook.getCurPage() - 1].playSound();
     }
   }
-  
+  public int ReadPages(){
+    return stat.PagesRead();
+  }
+  public int ReadBooks(){
+    return stat.BooksRead();
+  }
   void update() {
     if(get(mouseX, mouseY) == buttonColor || get(mouseX, mouseY) == buttonHighlight) {
       buttonOver = true;
