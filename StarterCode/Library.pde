@@ -1,3 +1,4 @@
+import javax.swing.JFrame;
 class Library {
   // is it possible to search? will be determined later but keep it in mind
   ArrayList<Book> books;
@@ -78,12 +79,18 @@ class Library {
       }
       triangle(0.93*width, 0.45*height, 0.97*width, 0.5*height, 0.93*width, 0.55*height);
     }
+    if(mousePressed){
+      if(mouseX>460&&mouseX<490&&mouseY>460&&mouseY<490){
+          ExploreWindow ex = new ExploreWindow();
+          JOptionPane.showInputDialog("What book would you like to search for?");
+         ex.setup();
+         ex.draw();
+          
+        }
+    }
     if(spot>0) {
       fill(253, 253, 253);
       if (mousePressed){
-        if(mouseX>460&&mouseX<490&&mouseY>460&&mouseY<490){
-          println("privyet");
-        }
         color c = get(mouseX, mouseY);
         if (c == color(253, 253, 253)){
           fill(50, 50, 50);
@@ -118,7 +125,8 @@ class Library {
       background(0,0,0);
       drawLibrary();
     }
-    circle(475, 475, 30);
+    circle(0.95*width, 0.95*height, 0.06*width);
     
   }
+  
 }
