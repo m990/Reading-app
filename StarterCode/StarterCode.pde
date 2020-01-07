@@ -16,7 +16,7 @@ void setup() {
   b1 = new Book("Test", 2, p, cover1);
   Book b2 = new Book("Test2", 1, p2, cover2);
   
-  w = new Window(b1);
+  w = new Window();
   
   l = new Library();
   
@@ -35,22 +35,11 @@ void setup() {
   
   l.addBook(b2);
   l.addBook(b2);
-  
-  l.addBook(b1);
-  l.addBook(b1);
-  
   l.addBook(b2);
   l.addBook(b2);
-  
   l.addBook(b2);
   l.addBook(b2);
-  
   l.addBook(b2);
-  l.addBook(b2);
-  
-  l.addBook(b1);
-  l.addBook(b1);
-  
   l.addBook(b2);
   l.addBook(b2);
 }

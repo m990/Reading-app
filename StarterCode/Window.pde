@@ -19,8 +19,25 @@ class Window {
   boolean buttonClicked;
   boolean button2Clicked;
   
-  public Window(Book b) {
+  /*public Window(Book b) {
     cBook = b;
+    cPage = cBook.pages[cBook.getCurPage()-1];
+    
+    buttonColor = color(193, 193, 193);
+    button2Color = color(194, 194, 194);
+    
+    buttonHighlight = color(96, 96, 96);
+    button2Highlight = color(97, 97, 97);
+    
+    buttonOver = false;
+    button2Over = false;
+    
+    buttonClicked = false;
+    button2Clicked = false;
+  }*/
+  
+  void initialize(Book bs){
+    cBook = bs;
     cPage = cBook.pages[cBook.getCurPage()-1];
     
     buttonColor = color(193, 193, 193);
@@ -100,6 +117,7 @@ class Window {
   }
   void setBook(Book book){
     cBook = book;
+    initialize(book);
   }
   Book getBook(){
     return cBook;

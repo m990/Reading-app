@@ -79,6 +79,7 @@ class Library {
            fill(1, 1, 1);
            spot++;
            changed = true;
+           currentPage++;
         }
         delay(50);
       }
@@ -91,6 +92,7 @@ class Library {
         if (c == color(253, 253, 253)){
           fill(50, 50, 50);
           spot--;
+          currentPage--;
           changed = true;
         } 
       delay(50);
@@ -136,11 +138,29 @@ class Library {
             topLeftBooks.add(books.get(i));
           }
         }
+        for (int i = 0; i < topLeftBooks.size(); i++){
+          println(topLeftBooks.get(i).getTitle());
+        }
         println ("Current page: " + currentPage);
         w.setBook(topLeftBooks.get(currentPage));
+        println ("Book: " + topLeftBooks.get(currentPage).getTitle()); 
         w.drawWindow();
       }
-      if (mouseX > 289 && mouseX < 427 && mouseY > 99 && mouseY < 241) println("button pressed");
+      if (mouseX > 289 && mouseX < 427 && mouseY > 99 && mouseY < 241){
+        inLibrary = false;
+        println("top right is pressed");
+        ArrayList<Book> topRightBooks = new ArrayList<Book>();
+        for (int i = 0; i < books.size(); i++){
+          if (i % 4 == 1){
+            topRightBooks.add(books.get(i));
+          }
+        }
+        for (int i = 0; i < topRightBooks.size(); i++){
+          println(topRightBooks.get(i).getTitle());
+        }
+        w.setBook(topRightBooks.get(currentPage));
+        w.drawWindow();
+      }
       if (mouseX > 78 && mouseX < 214 && mouseY > 314 && mouseY < 453) println("button pressed");
       if (mouseX > 289 && mouseX < 427 && mouseY > 314 && mouseY < 453) println("button pressed");
      }
