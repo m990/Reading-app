@@ -113,7 +113,8 @@ class Library {
     for(int i = 0; i < 8 && 8*spot+i < books.size(); i++){
       PImage cover = books.get(8*spot+i).getCoverImg();
       cover.resize(285/columns, 285/columns);
-        image(cover, xOffset+(i % (2*columns)) * 428/columns, yOffset+(i - (i % (2*columns)))/(2 * columns) * 428/columns);
+      // Changed to i + 1 to make sure that it works even when the first book is book 0
+        image(cover, xOffset+((i+1) % (2*columns)) * 428/columns, yOffset+((i+1) - ((i+1) % (2*columns)))/(2 * columns) * 428/columns);
     }
     if(changed == true){
       background(0,0,0);
