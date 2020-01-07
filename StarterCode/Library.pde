@@ -99,14 +99,22 @@ class Library {
     line(0, (int)((double)height/(double)10), width, (int)((double)height/(double)10));
     // Books
     int newHeight = height - (int)((double)height/(double)10);
-    int xOffset = (int) ((double) 1/2 * (double) (width - (double) 285/columns - (((double) (2*columns-1)*428)/columns)));
-    int yOffset = (int)((double)height/10) + (int) ((double) 1/2 * (double) (newHeight - (double) 285/columns - (double) (columns-1)* (double) 428/columns));
+    //int xOffset = (int) ((double) 1/2 * (double) (width - (double) 285/columns - (((double) (2*columns-1)*428)/columns)));
+    //int yOffset = (int)((double)height/10) + (int) ((double) 1/2 * (double) (newHeight - (double) 285/columns - (double) (columns-1)* (double) 428/columns));
     Iterator<Map.Entry<String, Book>> iter = books.entrySet().iterator();
-    for(int i = 0; i < 8 && 8*spot+i < books.size(); i++){
-      PImage cover = iter.next().getValue().getCoverImg();
+    int xOffset = 50;
+    int yOffset = (int)((double)height/10) + (int) ((double) 1/2 * (double) (newHeight - (double) 285/columns - (double) (columns-1)* (double) 428/columns));
+    for(int i = 0; i < 4 && 4*spot+i < books.size(); i++){
+      PImage cover = books.get(4*spot+i).getCoverImg();
       cover.resize(285/columns, 285/columns);
-        image(cover, xOffset+(i % (2*columns)) * 428/columns, yOffset+(i - (i % (2*columns)))/(2 * columns) * 428/columns);
+        image(cover, xOffset+(i % (2)) * 428/columns, yOffset+(i - (i % (2)))/( columns) * 428/columns);
     }
+    //for(int i = 0; i < 8 && 8*spot+i < books.size(); i++){
+    //
+    // PImage cover = iter.next().getValue().getCoverImg();
+    //  cover.resize(285/columns, 285/columns);
+    //    image(cover, xOffset+(i % (2*columns)) * 428/columns, yOffset+(i - (i % (2*columns)))/(2 * columns) * 428/columns);
+    //}
     println(books.size());
     if(changed){
       background(0,0,0);
