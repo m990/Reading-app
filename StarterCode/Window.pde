@@ -33,11 +33,8 @@ class Window {
   PImage homeIcon;
   
   boolean stay;
-  
-  Statistics stat;
-  public Window(Book b) {
+  public Window(Book b, Statistics stat) {
     firstPage = 1;
-    stat = new Statistics();
     l = new Library();
     cBook = b;
     cPage = cBook.pages[cBook.getCurPage()-1];

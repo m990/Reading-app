@@ -1,11 +1,13 @@
 class Library {
-  // is it possible to search? will be determined later but keep it in mind
+  // is it possible to search? will be determined later but keep it in mind -someone working on it
   ArrayList<Book> books;
-
+  Statistics stat;
   public Library() {
     books = new ArrayList<Book>();
     spot = 0;
     columns = 2;
+    
+    stat = new Statistics();
     
     buttonColor = color(193, 193, 193);
     button2Color = color(194, 194, 194);
@@ -29,6 +31,8 @@ class Library {
   
   boolean buttonClicked;
   boolean button2Clicked;
+  
+  
   
   public Library(ArrayList<Book> books){
     this.books = books;
@@ -81,6 +85,7 @@ class Library {
     if(spot>0) {
       fill(253, 253, 253);
       if (mousePressed){
+        //mouse pressed
         color c = get(mouseX, mouseY);
         if (c == color(253, 253, 253)){
           fill(50, 50, 50);
