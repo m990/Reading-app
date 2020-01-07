@@ -31,17 +31,16 @@ void setup() {
        }
   }*/
   l.addBook(b1);
-  l.addBook(b1);
-  
   l.addBook(b2);
+    l.addBook(b1);
   l.addBook(b2);
-  l.addBook(b2);
-  l.addBook(b2);
-  l.addBook(b2);
-  l.addBook(b2);
-  l.addBook(b2);
-  l.addBook(b2);
-  l.addBook(b2);
+    l.addBook(b1);
+      l.addBook(b2);
+    l.addBook(b1);
+      l.addBook(b2);
+
+
+
 }
 
 void draw() {

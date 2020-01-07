@@ -34,27 +34,7 @@ class Window {
   
   boolean stay;
   
-  Statistics stat;
-  public Window(Book b) {
-    firstPage = 1;
-    stat = new Statistics();
-    l = new Library();
-    cBook = b;
-    cPage = cBook.pages[cBook.getCurPage()-1];
-    
-    buttonColor = color(193, 193, 193);
-    button2Color = color(194, 194, 194);
-    
-    buttonHighlight = color(96, 96, 96);
-    button2Highlight = color(97, 97, 97);
-    
-    buttonOver = false;
-    button2Over = false;
-    homeOver = false;
-    
-    buttonClicked = false;
-    button2Clicked = false;
-  }*/
+  Statistics stat = new Statistics();
   
   void initialize(Book bs){
     cBook = bs;
@@ -73,14 +53,12 @@ class Window {
     button2Clicked = false;
   }
   
+  
   void drawWindow() {
-    
+        
     homeIcon = loadImage("homeicon.png");
     
     stay = true;
-  }
-  
-  void drawWindow() {
     //displays p's data and cBook's title
     //p's data is the text and image
     //button2X-width/25
@@ -123,11 +101,10 @@ class Window {
        forward = false;
        stat.numBooksRead++;
     }
-     //<>//
     //displaying buttons
     stroke(0, 0, 0);
     fill(192, 192, 192);
-    if(back) {
+    if(back) { //<>//
       if(!buttonClicked) {
         fill(buttonColor);
         triangle(buttonX, buttonY+(buttonHeight/2), buttonX+buttonWidth, buttonY+buttonHeight, buttonX+buttonWidth, buttonY);
@@ -165,7 +142,7 @@ class Window {
     return cBook;
   }
   
-  void mousePressed() {
+  void mousePressed() { //<>//
     if(buttonOver) {
       buttonClicked = true; 
     } else { //<>//

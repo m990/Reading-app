@@ -9,6 +9,7 @@ class Library {
     // Add one book, which is an instructions manual, so the program doesn't throw an error when generating the library.
     Page[] examplePages = {new Page("Access books in your library.", "click on books.png", color(255, 255, 255)), new Page("Switch pages by using the side arrows.", "use the side arrows.png", color(255, 255, 255)), new Page("Return to the library by clicking exit.", "click exit.png", color(255, 255, 255))};
     books.add(new Book("User Guide", 3, examplePages, "Centered? User Guide Title.png"));
+    books.add(new Book("User Guide", 3, examplePages, "Centered? User Guide Title.png"));
     spot = 0;
     columns = 2;
     currentPage = 0;
@@ -87,7 +88,7 @@ class Library {
         }
         delay(50);
       }
-      triangle(0.93*width, 0.45*height, 0.97*width, 0.5*height, 0.93*width, 0.55*height); //<>//
+      triangle(0.93*width, 0.45*height, 0.97*width, 0.5*height, 0.93*width, 0.55*height); 
     }
     if(spot>0) {
       fill(253, 253, 253);
@@ -122,8 +123,11 @@ class Library {
       PImage cover = books.get(8*spot+i).getCoverImg();
       cover.resize(285/columns, 285/columns);
       // Changed to i + 1 to make sure that it works even when the first book is book 0
-        image(cover, xOffset+((i+1) % (2*columns)) * 428/columns, yOffset+((i+1) - ((i+1) % (2*columns)))/(2 * columns) * 428/columns);
-    }
+        image(cover, xOffset+((i) % (2*columns)) * 428/columns, yOffset+((i) - ((i) % (2*columns)))/(2 * columns) * 428/columns);
+  println("x"  + (xOffset+((i) % (2*columns)) * 428/columns));
+  println("y" + (yOffset+((i) - ((i) % (2*columns)))/(2 * columns) * 428/columns));
+  
+  }
     if(changed == true){
       background(0,0,0);
       drawLibrary();
