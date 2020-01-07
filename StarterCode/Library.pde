@@ -4,6 +4,10 @@ class Library {
 
   public Library() {
     books = new ArrayList<Book>();
+    
+    // Add one book, which is an instructions manual, so the program doesn't throw an error when generating the library.
+    Page[] examplePages = {new Page("Access books in your library.", "Centered? User Guide Title.png", color(255, 255, 255)), new Page("Switch pages by using the side arrows.", "Centered? User Guide Title.png", color(255, 255, 255)), new Page("Return to the library by clicking exit.", "Centered? User Guide Title.png", color(255, 255, 255))};
+    books.add(new Book("User Guide", 3, examplePages, "Centered? User Guide Title.png"));
     spot = 0;
     columns = 2;
     
@@ -109,7 +113,8 @@ class Library {
     for(int i = 0; i < 8 && 8*spot+i < books.size(); i++){
       PImage cover = books.get(8*spot+i).getCoverImg();
       cover.resize(285/columns, 285/columns);
-        image(cover, xOffset+(i % (2*columns)) * 428/columns, yOffset+(i - (i % (2*columns)))/(2 * columns) * 428/columns);
+      // Changed to i + 1 to make sure that it works even when the first book is book 0
+        image(cover, xOffset+((i+1) % (2*columns)) * 428/columns, yOffset+((i+1) - ((i+1) % (2*columns)))/(2 * columns) * 428/columns);
     }
     if(changed == true){
       background(0,0,0);

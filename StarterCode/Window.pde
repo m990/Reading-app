@@ -78,7 +78,9 @@ class Window {
     // play first sound
     if (!hasPlayedFirstSound) {
      hasPlayedFirstSound = true;
-     cPage.getAudio().startSound();
+     if (cPage.getAudio() != null) {
+       cPage.getAudio().startSound();
+     }
     }
     //title text
     surface.setTitle("Book: "+cBook.getTitle());
