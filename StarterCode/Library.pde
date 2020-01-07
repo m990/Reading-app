@@ -81,6 +81,9 @@ class Library {
     if(spot>0) {
       fill(253, 253, 253);
       if (mousePressed){
+        if(mouseX>460&&mouseX<490&&mouseY>460&&mouseY<490){
+          println("privyet");
+        }
         color c = get(mouseX, mouseY);
         if (c == color(253, 253, 253)){
           fill(50, 50, 50);
@@ -115,5 +118,7 @@ class Library {
       background(0,0,0);
       drawLibrary();
     }
+    circle(475, 475, 30);
+    
   }
 }

@@ -75,7 +75,7 @@ class Window {
     // play first sound
     if (!hasPlayedFirstSound) {
      hasPlayedFirstSound = true;
-     cPage.getAudio().startSound();
+     //cPage.getAudio().startSound();
     }
     //title text
     surface.setTitle("Book: "+cBook.getTitle());
@@ -175,16 +175,16 @@ class Window {
       cBook.setCurPage(cBook.getCurPage()-1);
       cPage = cBook.pages[cBook.getCurPage()-1];
       // Play the new sound and stop the old one (-1 because array doesn't start at 1)
-      cBook.pages[cBook.getCurPage()].stopSound();
-      cBook.pages[cBook.getCurPage() - 1].playSound();
+     // cBook.pages[cBook.getCurPage()].stopSound();
+      //cBook.pages[cBook.getCurPage() - 1].playSound();
     } else {
       //process click
       //forward
       cBook.setCurPage(cBook.getCurPage()+1);
       cPage = cBook.pages[cBook.getCurPage()-1];
       // Play the new sound and stop the old one
-      cBook.pages[cBook.getCurPage() - 2].stopSound();
-      cBook.pages[cBook.getCurPage() - 1].playSound();
+      //cBook.pages[cBook.getCurPage() - 2].stopSound();
+     // cBook.pages[cBook.getCurPage() - 1].playSound();
     }
   }
   
