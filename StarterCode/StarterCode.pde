@@ -1,15 +1,39 @@
-Library l = new Library(new ArrayList<Book>());
-PImage coverImage;
-PImage coverImage2;
+Library l;
+Window w;
 void setup() {
+  size(500, 500);
+  String cover1 = "Art Example Two.png";
+  String cover2 = "Art Example Three.png";
+
+  Page[] p = {new Page("Rush is a Canadian band that averages a score of 7.500.", "pixil-frame-0.png", color(255, 255, 255), "rush.wav"), new Page("This score falls behind Taylor Swift by a full tenth.", "img2.png", color(255, 255, 255), "taylor swift.wav")};
+  Book b1 = new Book("Test", 2, p, cover1);
+  Book b2 = new Book("Test2", 2, p, cover2);
+  
+  l = new Library();
+  w = new Window(b1);
   background(0, 0, 0);
-  size(1000, 500);
-  coverImage = loadImage("Art Example Three.png");
-  coverImage2 = loadImage("Art Example Two.png");
-  l.addBook(new Book("La Edad de Oro", new ArrayList<Page>(), coverImage));
-  l.addBook(new Book("El Presidio Político en Cuba", new ArrayList<Page>(), coverImage2));
+  for(int i = 0; i<34; i++){
+       if( (int)Math.sqrt(i)%2 ==0 ){
+            l.addBook(b1);
+       }else{
+            l.addBook(b2);
+       }
+  }
 }
 
 void draw() {
-  l.drawLibrary();
+  if(w.getStay()) {
+    w.drawWindow();
+  } else {
+    clear();
+    l.drawLibrary();
+  }
+}
+
+void mousePressed() {
+  w.mousePressed();
+}
+
+void mouseReleased() {
+  w.mouseReleased();
 }

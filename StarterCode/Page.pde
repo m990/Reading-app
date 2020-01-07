@@ -1,40 +1,50 @@
 class Page {
+  private String text;
+  private PImage illustration; 
+  private color bgColor;
+  private Audio audio;
   
-  String text;
-  PImage illustration; 
-  int pageNumber;
-  color c;
-  
-  Page(String text, PImage illustration, int pageNumber){
+  public Page(String text, String pFile, color bgColor){
     this.text = text;
-    this.illustration = illustration;
-    this.pageNumber = pageNumber;
-    
+    this.illustration = loadImage(pFile);
+    this.bgColor = bgColor;
   }
   
+  public Page(String text, String pFile, color bgColor, String audioPath){
+    this.text = text;
+    this.illustration = loadImage(pFile);
+    this.bgColor = bgColor;
+    audio = new Audio(audioPath);
+  }
   
   // Getters and setters -- text
-  String getText() {
+  public String getText() {
    return text; 
   }
-  void setText(String newText) {
+  public void setText(String newText) {
    text = newText; 
   }
   
   // Getters and setters -- illustration
-  PImage getIllustration() {
+  public PImage getIllustration() {
    return illustration; 
   }
-  void setIllustration(PImage newImage) {
-   illustration = newImage; 
+  public void setIllustration(String pFile) {
+   illustration = loadImage(pFile); 
   }
   
-  // Getters and setters -- pageNumber
-  int getPageNumber() {
-   return pageNumber; 
+  // Getter for audio
+  Audio getAudio() {
+   return audio; 
   }
-  
-  void setPageNumber(int newPage) {
-    pageNumber = newPage;
+  void stopSound() {
+   if (audio != null) {
+     audio.endSound();
+   }
+  }
+  void playSound() {
+   if (audio != null) {
+    audio.startSound(); 
+   }
   }
 }
