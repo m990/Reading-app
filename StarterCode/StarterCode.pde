@@ -2,13 +2,11 @@ Library l;
 Window w;
 void setup() {
   size(500, 500);
-  String cover1 = "Art Example Two.png";
-  String cover2 = "Art Example Three.png";
 
-  Page[] p = {new Page("Rush is a Canadian band that averages a score of 7.500.", "pixil-frame-0.png", color(255, 255, 255), "rush.wav"), new Page("This score falls behind Taylor Swift by a full tenth.", "img2.png", color(255, 255, 255), "taylor swift.wav")};
-  Book b1 = new Book("Test", 2, p, cover1);
-  Book b2 = new Book("Test2", 2, p, cover2);
-  
+  // For now, this is only used to launch the window because it requires a book to be launched.
+  // This book isn't used otherwise and is not the same as the default book
+  Page[] examplePages = {new Page("Access books in your library.", "Centered? User Guide Title.png", color(255, 255, 255)), new Page("Switch pages by using the side arrows.", "Centered? User Guide Title.png", color(255, 255, 255)), new Page("Return to the library by clicking exit.", "Centered? User Guide Title.png", color(255, 255, 255))};
+  Book b2 = new Book("prueba", 3, examplePages, "Art Example Three.png");
   l = new Library();
   l.addBook(new Book("1", 2, p, cover1));
   l.addBook(new Book("2", 2, p, cover2));
@@ -19,6 +17,7 @@ void setup() {
   w = new Window(b1);
   background(0, 0, 0);
   
+
 }
 
 void draw() {
