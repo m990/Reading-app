@@ -1,5 +1,7 @@
 Library l;
 Window w;
+ExploreWindow ew;
+public static int i =0;
 void setup() {
   size(500, 500);
   String cover1 = "Art Example Two.png";
@@ -11,6 +13,7 @@ void setup() {
   
   l = new Library();
   w = new Window(b1);
+  ew = new ExploreWindow();
   background(0, 0, 0);
   for(int i = 0; i<34; i++){
        if( (int)Math.sqrt(i)%2 ==0 ){
@@ -22,12 +25,16 @@ void setup() {
 }
 
 void draw() {
-  if(w.getStay()) {
+  if(i == 1) {
     w.drawWindow();
-  } else {
+  } else if(i == 0){
     clear();
     l.drawLibrary();
   }
+  else{
+    clear();
+    ew.drawExploreWindow();
+  }  
 }
 
 void mousePressed() {
