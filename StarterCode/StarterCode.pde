@@ -6,18 +6,11 @@ void setup() {
   // For now, this is only used to launch the window because it requires a book to be launched.
   // This book isn't used otherwise and is not the same as the default book
   Page[] examplePages = {new Page("Access books in your library.", "Centered? User Guide Title.png", color(255, 255, 255)), new Page("Switch pages by using the side arrows.", "Centered? User Guide Title.png", color(255, 255, 255)), new Page("Return to the library by clicking exit.", "Centered? User Guide Title.png", color(255, 255, 255))};
-  Book b2 = new Book("prueba", 3, examplePages, "Art Example Three.png");
+  Book b1 = new Book("prueba", 3, examplePages, "Art Example Three.png");
   l = new Library();
-  l.addBook(new Book("1", 2, p, cover1));
-  l.addBook(new Book("2", 2, p, cover2));
-  l.addBook(new Book("3", 2, p, cover1));
-  l.addBook(new Book("4", 2, p, cover2));
-  l.addBook(new Book("5", 2, p, cover2));
   
   w = new Window(b1);
   background(0, 0, 0);
-  
-
 }
 
 void draw() {
