@@ -27,7 +27,7 @@ class Library {
     buttonClicked = false;
     button2Clicked = false;
   }
-  int spot;
+  int spot; //<>//
   int columns;
 
   boolean buttonOver;
@@ -96,6 +96,7 @@ class Library {
     
     // Your library sign
     // 1/30th (1/3 of 1/10 of height)
+    fill(255);
     textSize((int) ((double)1 / (double)15 * (double)height));
     text("Your Library", (int)((double)1/(double)40 * (double)width), (int)((double)3/(double)40 * (double)height));
     // Line
@@ -142,7 +143,10 @@ class Library {
       image(cover, xOffset+(bookIterator % (2)) * xPos/columns, yOffset+(bookIterator - (bookIterator % (2)))/( columns) * yPos/columns);
       bookIterator++;
     }
-    
+
+    TextField searchField = new TextField(390, 10, 100, 20, "Hi");
+    searchField.updateText();
+
     if(changed){
       background(0,0,0);
       drawLibrary();
