@@ -173,7 +173,7 @@ class Window {
     }
     if(homeOver) {
       //have functionality to return to library
-      //l.drawLibrary();
+      l.drawLibrary();
       stay = false;
     }
   }
