@@ -1,4 +1,4 @@
-import processing.sound.*;
+/*import processing.sound.*;
 
 class Audio {
  // Data + variables
@@ -17,4 +17,4 @@ class Audio {
  void endSound() {
   soundFile.stop(); 
  }
-}
+}*/

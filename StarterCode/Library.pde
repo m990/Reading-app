@@ -1,7 +1,10 @@
+import javax.swing.JFrame;
 class Library {
   // is it possible to search? will be determined later but keep it in mind
   ArrayList<Book> books;
-
+boolean b = false;
+Boolean a = true;
+ExploreWindow ex = new ExploreWindow();
   public Library() {
     books = new ArrayList<Book>();
     spot = 0;
@@ -64,6 +67,15 @@ class Library {
   }
   //draws the library
   void drawLibrary(){
+    
+    if(mousePressed && a){
+      if(mouseX>460&&mouseX<490&&mouseY>460&&mouseY<490){
+       i = 2;
+      }
+    }
+    else if(b){
+      i = 2;
+    }
     boolean changed = false;
     if(8*spot+8<getBooks().size()) {
       fill(254, 254, 254);
@@ -78,6 +90,7 @@ class Library {
       }
       triangle(0.93*width, 0.45*height, 0.97*width, 0.5*height, 0.93*width, 0.55*height);
     }
+    
     if(spot>0) {
       fill(253, 253, 253);
       if (mousePressed){
@@ -115,5 +128,8 @@ class Library {
       background(0,0,0);
       drawLibrary();
     }
+    circle(0.95*width, 0.95*height, 0.06*width);
+    
   }
+  
 }
