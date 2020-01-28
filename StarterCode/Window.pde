@@ -114,13 +114,10 @@ class Window {
       }
     }
     if(forward) {
-      System.err.println("forward");
       if(!button2Clicked) {
-        System.err.println("button 2 not clicked");
         fill(button2Color);
         triangle(button2X, buttonY, button2X, buttonY+buttonHeight, button2X+buttonWidth, buttonY+(buttonHeight/2)); 
       } else {
-        System.err.println("button 2 clicked");
         fill(button2Highlight);
         triangle(button2X, buttonY, button2X, buttonY+buttonHeight, button2X+buttonWidth, buttonY+(buttonHeight/2));
       }
@@ -210,17 +207,13 @@ class Window {
     return stat.BooksRead();
   }
   void update() {
-    System.err.println("updating");
     if(get(mouseX, mouseY) == buttonColor || get(mouseX, mouseY) == buttonHighlight) {
-      System.err.println("button over");
       buttonOver = true;
       button2Over = false;
     } else if(get(mouseX, mouseY) == button2Color || get(mouseX, mouseY) == button2Highlight) {
-      System.err.println("button 2 over");
       button2Over = true;
       buttonOver = false;
     } else {
-      System.err.println("no button over");
       buttonOver = false;
       button2Over = false;
     }
