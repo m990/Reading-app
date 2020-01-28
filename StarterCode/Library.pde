@@ -179,7 +179,8 @@ class Library {
         println ("Current page: " + currentPage);
         w.setBook(topLeftBooks.get(currentPage));
         println ("Book: " + topLeftBooks.get(currentPage).getTitle()); 
-        w.drawWindow();
+        //w.drawWindow();
+        inWindow=true;
       }
       if (mouseX > 289 && mouseX < 427 && mouseY > 99 && mouseY < 241){
         inLibrary = false;
@@ -194,7 +195,8 @@ class Library {
           println(topRightBooks.get(i).getTitle());
         }
         w.setBook(topRightBooks.get(currentPage));
-        w.drawWindow();
+        //w.drawWindow();
+        inWindow=true;
       }
       if (mouseX > 78 && mouseX < 214 && mouseY > 314 && mouseY < 453){
         inLibrary = false;
@@ -209,7 +211,8 @@ class Library {
           println(topRightBooks.get(i).getTitle());
         }
         w.setBook(topRightBooks.get(currentPage));
-        w.drawWindow();
+        //w.drawWindow();
+        inWindow=true;
       }
       if (mouseX > 289 && mouseX < 427 && mouseY > 314 && mouseY < 453){
                 inLibrary = false;
@@ -224,7 +227,8 @@ class Library {
           println(topRightBooks.get(i).getTitle());
         }
         w.setBook(topRightBooks.get(currentPage));
-        w.drawWindow();
+        //w.drawWindow();
+        inWindow=true;
       }
      }
   }

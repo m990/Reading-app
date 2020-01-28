@@ -5,7 +5,8 @@ Library l;
 Window w;
 Book b1;
 int currentPage;
-boolean inLibrary = true;
+public static boolean inLibrary = true;
+public static boolean inWindow = false;
 void setup() {
   size(500, 500);
   String cover1 = "Art Example Two.png";
@@ -51,6 +52,7 @@ void draw() {
   if (inLibrary) l.drawLibrary();
   // draws the book
   //w.draw();
+  if (inWindow) w.drawWindow();
 }
 
 void mousePressed() {
