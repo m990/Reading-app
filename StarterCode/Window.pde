@@ -9,6 +9,7 @@ class Window {
   color button2Color;
   color button2Highlight;
   
+  int firstPage;
   float buttonWidth = width/15;
   float buttonHeight = height/5;
   float buttonX = width/50;
@@ -19,7 +20,6 @@ class Window {
   float homeWidth = width/25;
   float homeHeight = height/25;
   
-
   boolean hasPlayedFirstSound = false;
 
   boolean buttonOver;
@@ -34,9 +34,10 @@ class Window {
   
   boolean stay;
   
-  public Window(Book b) {
-    l = new Library();
-    cBook = b;
+  Statistics stat = new Statistics();
+  
+  void initialize(Book bs){
+    cBook = bs;
     cPage = cBook.pages[cBook.getCurPage()-1];
     
     buttonColor = color(193, 193, 193);
@@ -47,18 +48,17 @@ class Window {
     
     buttonOver = false;
     button2Over = false;
-    homeOver = false;
     
     buttonClicked = false;
     button2Clicked = false;
-    homeClicked = false;
-    
+  }
+  
+  
+  void drawWindow() {
+        
     homeIcon = loadImage("homeicon.png");
     
     stay = true;
-  }
-  
-  void drawWindow() {
     //displays p's data and cBook's title
     //p's data is the text and image
     //button2X-width/25
@@ -75,7 +75,9 @@ class Window {
     // play first sound
     if (!hasPlayedFirstSound) {
      hasPlayedFirstSound = true;
-     cPage.getAudio().startSound();
+     if (cPage.getAudio() != null) {
+       cPage.getAudio().startSound();
+     }
     }
     //title text
     surface.setTitle("Book: "+cBook.getTitle());
@@ -97,12 +99,12 @@ class Window {
     }
     if(cBook.getCurPage() == cBook.getTotalPages()) {
        forward = false;
+       stat.numBooksRead++;
     }
-    
     //displaying buttons
     stroke(0, 0, 0);
     fill(192, 192, 192);
-    if(back) {
+    if(back) { //<>//
       if(!buttonClicked) {
         fill(buttonColor);
         triangle(buttonX, buttonY+(buttonHeight/2), buttonX+buttonWidth, buttonY+buttonHeight, buttonX+buttonWidth, buttonY);
@@ -132,8 +134,15 @@ class Window {
     
     update();
   }
+  void setBook(Book book){
+    cBook = book;
+    initialize(book);
+  }
+  Book getBook(){
+    return cBook;
+  }
   
-  void mousePressed() {
+  void mousePressed() { //<>//
     if(buttonOver) {
       buttonClicked = true; 
     } else { //<>//
@@ -156,13 +165,17 @@ class Window {
     homeClicked = false;
     if(buttonOver) {
       updatePage(0);
+      stat.numPagesRead--;
     }
     if(button2Over) {
       updatePage(1);
+      stat.numPagesRead++;
     }
     if(homeOver) {
       //have functionality to return to library
       //l.drawLibrary();
+      inLibrary = true;
+      inWindow = false;
       stay = false;
     }
   }
@@ -187,7 +200,12 @@ class Window {
       cBook.pages[cBook.getCurPage() - 1].playSound();
     }
   }
-  
+  public int ReadPages(){
+    return stat.PagesRead();
+  }
+  public int ReadBooks(){
+    return stat.BooksRead();
+  }
   void update() {
     if(get(mouseX, mouseY) == buttonColor || get(mouseX, mouseY) == buttonHighlight) {
       buttonOver = true;
@@ -210,4 +228,5 @@ class Window {
   boolean getStay() {
     return stay;
   }
+  
 }
