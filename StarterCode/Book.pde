@@ -6,6 +6,8 @@ class Book {
  //current page #
  private int curPageN;
  private PImage coverImg;
+ private int page;
+ private int spot;
  
  private Page[] pages;
 
@@ -46,5 +48,16 @@ class Book {
  public PImage getCoverImg() {
    return coverImg;
  }
- 
+ public void setPage(int p){
+   page = p;
+ }
+ public int getPage(){
+   return page;
+ }
+ public void setSpot(int s){
+   spot = s;
+ }
+ public int getSpot(){
+   return spot;
+ }
 }
