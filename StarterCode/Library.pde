@@ -1,7 +1,7 @@
 import java.util.TreeMap;
 import java.util.Iterator;
 import java.util.Map;
-
+ExploreWindow ex;
 class Library {
   // is it possible to search? will be determined later but keep it in mind
   //ArrayList<Book> books;
@@ -16,7 +16,6 @@ class Library {
     books.put("User Guide", new Book("User Guide", 3, examplePages, "Centered? User Guide Title.png"));
     spot = 0;
     columns = 2;
-    
     buttonColor = color(193, 193, 193);
     button2Color = color(194, 194, 194);
     buttonHighlight = color(96, 96, 96);
@@ -66,6 +65,27 @@ class Library {
   }
   //draws the library
   void drawLibrary(){
+    boolean b2 = false;
+    circle(width*0.9, height*0.9, width*0.1);
+if(b2){
+        print("a");
+        ex = new ExploreWindow();
+
+        ex.drawExploreWindow();
+        
+      }
+    else if(mousePressed){
+      ex = new ExploreWindow();
+      
+      if(mouseX > width*0.9-width*0.1 && mouseX < width*0.9 + width*0.1 && mouseY > height*0.9-width*0.1 && mouseY < height*0.9 + width*0.1){
+        ex.drawExploreWindow();
+        b2 = true;
+      } 
+      
+      }
+      
+    
+    
     boolean changed = false;
     if(spot*4+4 < books.size()) {
       fill(254, 254, 254);
