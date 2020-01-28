@@ -73,6 +73,7 @@ class Library {
   }
   //draws the library
   void drawLibrary(){
+    clear();
     boolean changed = false;
     if(spot*4+4 < books.size()) {
       fill(254, 254, 254);
