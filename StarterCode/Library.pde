@@ -3,31 +3,12 @@ import java.util.Iterator;
 import java.util.Map;
 
 class Library {
-  // is it possible to search? will be determined later but keep it in mind
-  //ArrayList<Book> books;
-  //key is title
+  //K = title
+  //V = book object
   TreeMap<String, Book> books;
+  TextField searchField;
 
-  public Library() {
-    books = new TreeMap<String, Book>();
-
-    // Add one book, which is an instructions manual, so the program doesn't throw an error when generating the library.
-    Page[] examplePages = {new Page("Access books in your library.", "click on books.png", color(255, 255, 255)), new Page("Switch pages by using the side arrows.", "use the side arrows.png", color(255, 255, 255)), new Page("Return to the library by clicking exit.", "click exit.png", color(255, 255, 255))};
-    books.put("User Guide", new Book("User Guide", 3, examplePages, "Centered? User Guide Title.png"));
-    spot = 0;
-    columns = 2;
-    
-    buttonColor = color(193, 193, 193);
-    button2Color = color(194, 194, 194);
-    buttonHighlight = color(96, 96, 96);
-    button2Highlight = color(97, 97, 97);
-    buttonOver = false;
-    button2Over = false;
-    
-    buttonClicked = false;
-    button2Clicked = false;
-  }
-  int spot; //<>//
+  int spot;
   int columns;
 
   boolean buttonOver;
@@ -39,9 +20,19 @@ class Library {
   
   boolean buttonClicked;
   boolean button2Clicked;
-  
-  public Library(TreeMap<String, Book> books){
-    this.books = books;
+
+  int blinkCounter;
+  boolean searchFieldClicked;
+
+  //constructors
+  public Library() {
+    books = new TreeMap<String, Book>();
+    searchField = new TextField(width*390/500, height*10/500, width*100/500, height*20/500, "Hi"); //<>// //<>//
+
+    // Add one book, which is an instructions manual, so the program doesn't throw an error when generating the library.
+    Page[] examplePages = {new Page("Access books in your library.", "click on books.png", color(255, 255, 255)), new Page("Switch pages by using the side arrows.", "use the side arrows.png", color(255, 255, 255)), new Page("Return to the library by clicking exit.", "click exit.png", color(255, 255, 255))};
+    books.put("User Guide", new Book("User Guide", 3, examplePages, "Centered? User Guide Title.png"));
+
     spot = 0;
     columns = 2;
     
@@ -51,10 +42,20 @@ class Library {
     button2Highlight = color(97, 97, 97);
     buttonOver = false;
     button2Over = false;
-    
+
     buttonClicked = false;
     button2Clicked = false;
+
+    blinkCounter = 0;
+    searchFieldClicked = false;
   }
+  
+  public Library(TreeMap<String, Book> books){
+    this();
+    this.books = books;
+  }
+
+  //getters, setters
   TreeMap<String, Book> getBooks(){
     return books;
   }
@@ -64,9 +65,31 @@ class Library {
   Book getBook(String bookName) {
     return books.get(bookName);
   }
+  
   //draws the library
   void drawLibrary(){
+    searchField = new TextField(searchField.getX(), searchField.getY(),
+                                searchField.getW(), searchField.getH(),
+                                searchField.getText());
+    searchField.updateText(blinkCounter, searchFieldClicked);
+
     boolean changed = false;
+    //check if searchField is clicked
+    if(mousePressed) {
+      if(mouseX > searchField.getX() && mouseX < searchField.getX()+searchField.getW() &&
+         mouseY > searchField.getY() && mouseY < searchField.getY()+searchField.getH()) {
+        searchFieldClicked = true;
+      } else {
+        searchFieldClicked = false;
+      }
+    }
+
+    if(keyPressed && searchFieldClicked) {
+      searchField.appendText(key+"");
+      delay(100);
+    }
+
+    //button click checks
     if(spot*4+4 < books.size()) {
       fill(254, 254, 254);
       triangle(0.93*width, 0.45*height, 0.97*width, 0.5*height, 0.93*width, 0.55*height);
@@ -144,12 +167,11 @@ class Library {
       bookIterator++;
     }
 
-    TextField searchField = new TextField(390, 10, 100, 20, "Hi");
-    searchField.updateText();
+    blinkCounter = (blinkCounter+1)%32;
 
-    if(changed){
-      background(0,0,0);
-      drawLibrary();
-    }
+    // if(changed){
+    //   background(0);
+    //   drawLibrary();
+    // }
   }
 }
