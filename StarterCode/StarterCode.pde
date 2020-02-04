@@ -32,3 +32,7 @@ void mousePressed() {
 void mouseReleased() {
   w.mouseReleased();
 }
+
+void keyPressed() {
+  l.keyPressed();
+}

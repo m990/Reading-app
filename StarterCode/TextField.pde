@@ -45,6 +45,10 @@ class TextField {
         this.text = text;
     }
 
+    public int strLength() {
+        return text.length();
+    }
+
     public void appendText(String append) {
         text = text+append;
     }
@@ -52,13 +56,13 @@ class TextField {
     public void updateText(int blinkCounter, boolean display) {
         fill(0);
         textSize(16);
-        text(this.text, x, y+h-(height/110));
+        text(this.text, x+(float)w/40, y+h-(height/110));
 
         //blinking animation
         //display if searchField is clicked
         //blinkCounter ensures drawn in 16/32 iterations
         if(display && blinkCounter < 16) {
-            line(x+textWidth(this.text), y, x+textWidth(this.text), y+h-(height/110));
+            line(x+textWidth(this.text)+(float)w/30, y+(float)h/20, x+textWidth(this.text)+(float)w/30, y+h-(height/110)+(float)h/20);
         }
     }
 }

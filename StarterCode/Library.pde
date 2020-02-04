@@ -27,7 +27,7 @@ class Library {
   //constructors
   public Library() {
     books = new TreeMap<String, Book>();
-    searchField = new TextField(width*390/500, height*10/500, width*100/500, height*20/500, "Hi"); //<>// //<>//
+    searchField = new TextField(width*390/500, height*10/500, width*100/500, height*20/500, "");
 
     // Add one book, which is an instructions manual, so the program doesn't throw an error when generating the library.
     Page[] examplePages = {new Page("Access books in your library.", "click on books.png", color(255, 255, 255)), new Page("Switch pages by using the side arrows.", "use the side arrows.png", color(255, 255, 255)), new Page("Return to the library by clicking exit.", "click exit.png", color(255, 255, 255))};
@@ -68,6 +68,7 @@ class Library {
   
   //draws the library
   void drawLibrary(){
+    
     searchField = new TextField(searchField.getX(), searchField.getY(),
                                 searchField.getW(), searchField.getH(),
                                 searchField.getText());
@@ -84,10 +85,16 @@ class Library {
       }
     }
 
-    if(keyPressed && searchFieldClicked) {
-      searchField.appendText(key+"");
-      delay(100);
-    }
+    // if(keyPressed && searchFieldClicked) {
+    //   if(key == CODED || key == BACKSPACE) {
+    //     if(key == BACKSPACE && searchField.getText().length() > 0) {
+    //       searchField.setText(searchField.getText().substring(0, searchField.getText().length()-1));
+    //     }
+    //   } else {
+    //     searchField.appendText(key+"");
+    //     delay(500);
+    //   }
+    // }
 
     //button click checks
     if(spot*4+4 < books.size()) {
@@ -138,24 +145,7 @@ class Library {
     float yOffset = (float)((double)height/10) + (int) ((double) 1/2 * (double) (newHeight - (double) coverHeight/columns - (double) (columns-1)* (double) yPos/columns));
     
     // Divide treeMap into 2d array so it can be iterated over.
-    ArrayList<ArrayList<Book>> libraryPages = new ArrayList<ArrayList<Book>>();
-    ArrayList<Book> temporaryList = new ArrayList<Book>();
-    int it = 0;
-    for(Map.Entry<String,Book> entry: books.entrySet()) {
-      temporaryList.add(entry.getValue());
-      if (it == 3) {
-       it = 0;
-       libraryPages.add(temporaryList);
-       temporaryList = new ArrayList<Book>();
-      }
-      else {
-       it++; 
-      }
-
-    }
-    if(temporaryList.size() > 0) {
-      libraryPages.add(temporaryList); 
-    }
+    ArrayList<ArrayList<Book>> libraryPages = convertToMat();
     //drawing books that belong to spot/page
     int bookIterator = 0;
     
@@ -173,5 +163,41 @@ class Library {
     //   background(0);
     //   drawLibrary();
     // }
+  }
+
+  ArrayList<ArrayList<Book>> convertToMat() {
+    ArrayList<ArrayList<Book>> libraryPages = new ArrayList<ArrayList<Book>>();
+    ArrayList<Book> temporaryList = new ArrayList<Book>();
+    int it = 0;
+    for(Map.Entry<String,Book> entry: books.entrySet()) {
+      temporaryList.add(entry.getValue());
+      if (it == 3) {
+       it = 0;
+       libraryPages.add(temporaryList);
+       temporaryList = new ArrayList<Book>();
+      }
+      else {
+       it++; 
+      }
+    }
+    if(temporaryList.size() > 0) {
+      libraryPages.add(temporaryList); 
+    }
+
+    return libraryPages;
+  }
+
+  void keyPressed() {
+    if(searchFieldClicked && key != CODED) {
+      if(key == BACKSPACE) {
+        if(searchField.strLength() > 0) {
+          searchField.setText(searchField.getText().substring(0, searchField.strLength()-1));
+        }
+      } else if(key == ENTER || key == RETURN) {
+        //use convertToMat, have to change how it is called in drawLibrary()
+      } else {
+        searchField.appendText(key+"");
+      }
+    }
   }
 }
