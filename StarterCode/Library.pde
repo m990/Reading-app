@@ -2,11 +2,15 @@ import java.util.TreeMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import controlP5.*;
+
+import processing.core.PApplet;
+
 class Library {
   //K = title
   //V = book object
   TreeMap<String, Book> books;
-  TextField searchField;
+  //TextField searchField;
 
   int spot;
   int columns;
@@ -24,10 +28,15 @@ class Library {
   int blinkCounter;
   boolean searchFieldClicked;
 
+  ControlP5 cp5;
+  
+  Textfield tf;
+
   //constructors
-  public Library() {
+  public Library(PApplet p) {
+    
     books = new TreeMap<String, Book>();
-    searchField = new TextField(width*390/500, height*10/500, width*100/500, height*20/500, "");
+    //searchField = new TextField(width*390/500, height*10/500, width*100/500, height*20/500, "");
 
     // Add one book, which is an instructions manual, so the program doesn't throw an error when generating the library.
     Page[] examplePages = {new Page("Access books in your library.", "click on books.png", color(255, 255, 255)), new Page("Switch pages by using the side arrows.", "use the side arrows.png", color(255, 255, 255)), new Page("Return to the library by clicking exit.", "click exit.png", color(255, 255, 255))};
@@ -48,10 +57,22 @@ class Library {
 
     blinkCounter = 0;
     searchFieldClicked = false;
+
+    cp5 = new ControlP5(p);
+    tf = cp5.addTextfield("Search");
+    tf.setPosition(width*390/500, height*25/500-(height*10/500));
+    tf.setSize(width*100/500, height*20/500);
+    tf.setFont(createFont("Arial", 16));
+    tf.setFocus(true);
+    tf.setAutoClear(false);
+    tf.setVisible(false);
+    tf.setColor(color(0));
+    tf.setColorBackground(color(255));
+    tf.setColorForeground(color(255));
   }
   
-  public Library(TreeMap<String, Book> books){
-    this();
+  public Library(PApplet p, TreeMap<String, Book> books){
+    this(p);
     this.books = books;
   }
 
@@ -68,22 +89,23 @@ class Library {
   
   //draws the library
   void drawLibrary(){
-    
-    searchField = new TextField(searchField.getX(), searchField.getY(),
-                                searchField.getW(), searchField.getH(),
-                                searchField.getText());
-    searchField.updateText(blinkCounter, searchFieldClicked);
+    tf.setVisible(true);
+    cp5.getController("Search").getCaptionLabel().setVisible(false);
+    // searchField = new TextField(searchField.getX(), searchField.getY(),
+    //                             searchField.getW(), searchField.getH(),
+    //                             searchField.getText());
+    // searchField.updateText(blinkCounter, searchFieldClicked);
 
     boolean changed = false;
     //check if searchField is clicked
-    if(mousePressed) {
-      if(mouseX > searchField.getX() && mouseX < searchField.getX()+searchField.getW() &&
-         mouseY > searchField.getY() && mouseY < searchField.getY()+searchField.getH()) {
-        searchFieldClicked = true;
-      } else {
-        searchFieldClicked = false;
-      }
-    }
+    // if(mousePressed) {
+    //   if(mouseX > searchField.getX() && mouseX < searchField.getX()+searchField.getW() &&
+    //      mouseY > searchField.getY() && mouseY < searchField.getY()+searchField.getH()) {
+    //     searchFieldClicked = true;
+    //   } else {
+    //     searchFieldClicked = false;
+    //   }
+    // }
 
     // if(keyPressed && searchFieldClicked) {
     //   if(key == CODED || key == BACKSPACE) {
@@ -187,17 +209,17 @@ class Library {
     return libraryPages;
   }
 
-  void keyPressed() {
-    if(searchFieldClicked && key != CODED) {
-      if(key == BACKSPACE) {
-        if(searchField.strLength() > 0) {
-          searchField.setText(searchField.getText().substring(0, searchField.strLength()-1));
-        }
-      } else if(key == ENTER || key == RETURN) {
-        //use convertToMat, have to change how it is called in drawLibrary()
-      } else {
-        searchField.appendText(key+"");
-      }
-    }
-  }
+  // void keyPressed() {
+  //   if(searchFieldClicked && key != CODED) {
+  //     if(key == BACKSPACE) {
+  //       if(searchField.strLength() > 0) {
+  //         searchField.setText(searchField.getText().substring(0, searchField.strLength()-1));
+  //       }
+  //     } else if(key == ENTER || key == RETURN) {
+  //       //use convertToMat, have to change how it is called in drawLibrary()
+  //     } else {
+  //       searchField.appendText(key+"");
+  //     }
+  //   }
+  // }
 }

@@ -38,7 +38,6 @@ class Window {
   public Window(Book b) {
     firstPage = 1;
     stat = new Statistics();
-    l = new Library();
     cBook = b;
     cPage = cBook.pages[cBook.getCurPage()-1];
     
@@ -105,7 +104,7 @@ class Window {
        stat.numBooksRead++;
     }
      //<>//
-    //displaying buttons
+    //displaying buttons //<>//
     stroke(0, 0, 0);
     fill(192, 192, 192);
     if(back) {
@@ -143,7 +142,7 @@ class Window {
     if(buttonOver) {
       buttonClicked = true; 
     } else { //<>//
-      buttonClicked = false; 
+      buttonClicked = false;  //<>//
     }
     if(button2Over) {
       button2Clicked = true; 
