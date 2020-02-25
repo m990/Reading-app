@@ -10,7 +10,6 @@ class Library {
   //K = title
   //V = book object
   TreeMap<String, Book> books;
-  //TextField searchField;
 
   int spot;
   int columns;
@@ -25,9 +24,6 @@ class Library {
   boolean buttonClicked;
   boolean button2Clicked;
 
-  int blinkCounter;
-  boolean searchFieldClicked;
-
   ControlP5 cp5;
   
   Textfield tf;
@@ -36,7 +32,6 @@ class Library {
   public Library(PApplet p) {
     
     books = new TreeMap<String, Book>();
-    //searchField = new TextField(width*390/500, height*10/500, width*100/500, height*20/500, "");
 
     // Add one book, which is an instructions manual, so the program doesn't throw an error when generating the library.
     Page[] examplePages = {new Page("Access books in your library.", "click on books.png", color(255, 255, 255)), new Page("Switch pages by using the side arrows.", "use the side arrows.png", color(255, 255, 255)), new Page("Return to the library by clicking exit.", "click exit.png", color(255, 255, 255))};
@@ -55,9 +50,6 @@ class Library {
     buttonClicked = false;
     button2Clicked = false;
 
-    blinkCounter = 0;
-    searchFieldClicked = false;
-
     cp5 = new ControlP5(p);
     tf = cp5.addTextfield("Search");
     tf.setPosition(width*390/500, height*25/500-(height*10/500));
@@ -69,6 +61,7 @@ class Library {
     tf.setColor(color(0));
     tf.setColorBackground(color(255));
     tf.setColorForeground(color(255));
+    tf.setColorCursor(color(0));
   }
   
   public Library(PApplet p, TreeMap<String, Book> books){
@@ -91,32 +84,8 @@ class Library {
   void drawLibrary(){
     tf.setVisible(true);
     cp5.getController("Search").getCaptionLabel().setVisible(false);
-    // searchField = new TextField(searchField.getX(), searchField.getY(),
-    //                             searchField.getW(), searchField.getH(),
-    //                             searchField.getText());
-    // searchField.updateText(blinkCounter, searchFieldClicked);
 
     boolean changed = false;
-    //check if searchField is clicked
-    // if(mousePressed) {
-    //   if(mouseX > searchField.getX() && mouseX < searchField.getX()+searchField.getW() &&
-    //      mouseY > searchField.getY() && mouseY < searchField.getY()+searchField.getH()) {
-    //     searchFieldClicked = true;
-    //   } else {
-    //     searchFieldClicked = false;
-    //   }
-    // }
-
-    // if(keyPressed && searchFieldClicked) {
-    //   if(key == CODED || key == BACKSPACE) {
-    //     if(key == BACKSPACE && searchField.getText().length() > 0) {
-    //       searchField.setText(searchField.getText().substring(0, searchField.getText().length()-1));
-    //     }
-    //   } else {
-    //     searchField.appendText(key+"");
-    //     delay(500);
-    //   }
-    // }
 
     //button click checks
     if(spot*4+4 < books.size()) {
@@ -179,12 +148,16 @@ class Library {
       bookIterator++;
     }
 
-    blinkCounter = (blinkCounter+1)%32;
-
     // if(changed){
     //   background(0);
     //   drawLibrary();
     // }
+    println(cp5.getWindow().getMouseOverList().size());
+    if(cp5.getWindow().getMouseOverList().size() > 0 && keyPressed) {
+      if(key==ENTER || key==RETURN) {
+        println("HI");
+      }
+    }
   }
 
   ArrayList<ArrayList<Book>> convertToMat() {
@@ -209,17 +182,5 @@ class Library {
     return libraryPages;
   }
 
-  // void keyPressed() {
-  //   if(searchFieldClicked && key != CODED) {
-  //     if(key == BACKSPACE) {
-  //       if(searchField.strLength() > 0) {
-  //         searchField.setText(searchField.getText().substring(0, searchField.strLength()-1));
-  //       }
-  //     } else if(key == ENTER || key == RETURN) {
-  //       //use convertToMat, have to change how it is called in drawLibrary()
-  //     } else {
-  //       searchField.appendText(key+"");
-  //     }
-  //   }
-  // }
 }
+ 
