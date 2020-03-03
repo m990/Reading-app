@@ -27,6 +27,9 @@ class Library {
   ControlP5 cp5;
   
   Textfield tf;
+  Button clear;
+
+  String searchQuery;
 
   //constructors
   public Library(PApplet p) {
@@ -52,7 +55,7 @@ class Library {
 
     cp5 = new ControlP5(p);
     tf = cp5.addTextfield("Search");
-    tf.setPosition(width*390/500, height*25/500-(height*10/500));
+    tf.setPosition(width*330/500, height*25/500-(height*10/500));
     tf.setSize(width*100/500, height*20/500);
     tf.setFont(createFont("Arial", 16));
     tf.setFocus(true);
@@ -62,6 +65,16 @@ class Library {
     tf.setColorBackground(color(255));
     tf.setColorForeground(color(255));
     tf.setColorCursor(color(0));
+    clear = cp5.addButton("Clear");
+    clear.setPosition(width*440/500, height*25/500-(height*10/500));
+    clear.setSize(width*50/500, height*20/500);
+    clear.setVisible(false);
+    clear.setColorBackground(color(110));
+    clear.setColorForeground(color(90));
+    clear.setColorActive(color(70));
+    clear.setFont(createFont("Arial", 11));
+
+    searchQuery = "";
   }
   
   public Library(PApplet p, TreeMap<String, Book> books){
@@ -83,6 +96,7 @@ class Library {
   //draws the library
   void drawLibrary(){
     tf.setVisible(true);
+    clear.setVisible(true);
     cp5.getController("Search").getCaptionLabel().setVisible(false);
 
     boolean changed = false;
@@ -114,6 +128,12 @@ class Library {
       delay(50);
       }
     }
+
+    if(tf.isFocus() && keyPressed) {
+      if(key==ENTER || key==RETURN) {
+        searchQuery = tf.getText();
+      }
+    }
     
     // Your library sign
     // 1/30th (1/3 of 1/10 of height)
@@ -136,7 +156,7 @@ class Library {
     float yOffset = (float)((double)height/10) + (int) ((double) 1/2 * (double) (newHeight - (double) coverHeight/columns - (double) (columns-1)* (double) yPos/columns));
     
     // Divide treeMap into 2d array so it can be iterated over.
-    ArrayList<ArrayList<Book>> libraryPages = convertToMat();
+    ArrayList<ArrayList<Book>> libraryPages = convertToMat(searchQuery);
     //drawing books that belong to spot/page
     int bookIterator = 0;
     
@@ -152,20 +172,19 @@ class Library {
     //   background(0);
     //   drawLibrary();
     // }
-    println(cp5.getWindow().getMouseOverList().size());
-    if(cp5.getWindow().getMouseOverList().size() > 0 && keyPressed) {
-      if(key==ENTER || key==RETURN) {
-        println("HI");
-      }
-    }
   }
 
-  ArrayList<ArrayList<Book>> convertToMat() {
+  ArrayList<ArrayList<Book>> convertToMat(String filter) {
     ArrayList<ArrayList<Book>> libraryPages = new ArrayList<ArrayList<Book>>();
     ArrayList<Book> temporaryList = new ArrayList<Book>();
     int it = 0;
     for(Map.Entry<String,Book> entry: books.entrySet()) {
-      temporaryList.add(entry.getValue());
+      if(filter.equals("")) {
+        temporaryList.add(entry.getValue());
+      } else if(entry.getKey().toLowerCase().contains(filter.toLowerCase())) {
+        temporaryList.add(entry.getValue());
+      }
+      
       if (it == 3) {
        it = 0;
        libraryPages.add(temporaryList);
@@ -181,6 +200,13 @@ class Library {
 
     return libraryPages;
   }
+
+  public void clearSearch() {
+    searchQuery = "";
+    tf.setText("");
+  }
+
+  
 
 }
  

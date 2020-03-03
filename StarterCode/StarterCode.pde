@@ -32,3 +32,9 @@ void mousePressed() {
 void mouseReleased() {
   w.mouseReleased();
 }
+
+public void controlEvent(ControlEvent e) {
+    if(e.getController().getName().equals("Clear")) {
+      l.clearSearch();
+    }
+}
