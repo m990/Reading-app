@@ -15,8 +15,19 @@ class Library {
     Page[] examplePages = {new Page("Access books in your library.", "click on books.png", color(255, 255, 255)), new Page("Switch pages by using the side arrows.", "use the side arrows.png", color(255, 255, 255)), new Page("Return to the library by clicking exit.", "click exit.png", color(255, 255, 255))};
     books.put("User Guide", new Book("User Guide", 3, examplePages, "Centered? User Guide Title.png"));
     books.put("User Guide2", new Book("User Guide", 3, examplePages, "Centered? User Guide Title.png"));
+    books.put("User Guide3", new Book("User Guide", 3, examplePages, "Centered? User Guide Title.png"));
+    books.put("User Guide4", new Book("User Guide", 3, examplePages, "Centered? User Guide Title.png"));
+    books.put("User Guide5", new Book("User Guide", 3, examplePages, "Centered? User Guide Title.png"));
+    books.put("User Guide6", new Book("User Guide", 3, examplePages, "Centered? User Guide Title.png"));
+    books.put("User Guide7", new Book("User Guide", 3, examplePages, "Centered? User Guide Title.png"));
+    books.put("User Guide8", new Book("User Guide", 3, examplePages, "Centered? User Guide Title.png"));
+    books.put("User Guide9", new Book("User Guide", 3, examplePages, "Centered? User Guide Title.png"));
+    books.put("User Guide10", new Book("User Guide", 3, examplePages, "Centered? User Guide Title.png"));
+    books.put("User Guide11", new Book("User Guide", 3, examplePages, "Centered? User Guide Title.png"));
+    books.put("User Guide12", new Book("User Guide", 3, examplePages, "Centered? User Guide Title.png"));
+    books.put("User Guide13", new Book("User Guide", 3, examplePages, "Centered? User Guide Title.png"));
     spot = 0;
-    columns = 2;
+    columns = width/250;
     currentPage = 0;
     
     buttonColor = color(193, 193, 193);
@@ -46,7 +57,6 @@ class Library {
   public Library(TreeMap<String, Book> books){
     this.books = books;
     spot = 0;
-    columns = 2;
     
     buttonColor = color(193, 193, 193);
     button2Color = color(194, 194, 194);
@@ -74,7 +84,7 @@ class Library {
   void drawLibrary(){
     clear();
     boolean changed = false;
-    if(spot*4+4 < books.size()) {
+    if((spot+1)*columns*columns < books.size()) {
       fill(254, 254, 254);
       triangle(0.93*width, 0.45*height, 0.97*width, 0.5*height, 0.93*width, 0.55*height);
       if (mousePressed){
@@ -121,7 +131,7 @@ class Library {
     
     int newHeight = height - (int)((double)height/(double)10);
     float xOffset = (float) width/10;
-    float yOffset = (float)((double)height/10) + (int) ((double) 1/2 * (double) (newHeight - (double) coverHeight/columns - (double) (columns-1)* (double) yPos/columns));
+    float yOffset = (float)((double)height/10) + (int) ((double) 1/columns * (double) (newHeight - (double) coverHeight/columns - (double) (columns-1)* (double) yPos/columns));
     
     // Divide treeMap into 2d array so it can be iterated over.
     ArrayList<ArrayList<Book>> libraryPages = new ArrayList<ArrayList<Book>>();
@@ -129,7 +139,7 @@ class Library {
     int it = 0;
     for(Map.Entry<String,Book> entry: books.entrySet()) {
       temporaryList.add(entry.getValue());
-      if (it == 3) {
+      if (it == columns*columns-1) {
        it = 0;
        libraryPages.add(temporaryList);
        temporaryList = new ArrayList<Book>();
@@ -149,7 +159,7 @@ class Library {
       // iterate over treemap for each book.
       PImage cover = b.getCoverImg();
       cover.resize(coverWidth/columns, coverHeight/columns);
-      image(cover, xOffset+(bookIterator % (2)) * xPos/columns, yOffset+(bookIterator - (bookIterator % (2)))/( columns) * yPos/columns);
+      image(cover, xOffset+(bookIterator % (columns)) * xPos/columns, yOffset+(bookIterator - (bookIterator % (columns)))/(columns) * yPos/columns);
       bookIterator++;
     }
     
@@ -169,7 +179,7 @@ class Library {
         }*/
         ArrayList<Book> topLeftBooks = new ArrayList<Book>();
         for (int i = 0; i < bookList.size(); i++){
-          if (i % 4 == 0){
+          if (i % columns*columns == 0){
             topLeftBooks.add(bookList.get(i));
           }
         }
@@ -183,7 +193,6 @@ class Library {
           inWindow=true;
         }
         catch(Exception e) {
-          System.err.println("grr");
           inLibrary = true;
         }
       }
@@ -206,7 +215,6 @@ class Library {
           inWindow=true;
         }
         catch(Exception e) {
-          System.err.println("grr");
           inLibrary = true;
         }
       }
@@ -229,7 +237,6 @@ class Library {
           inWindow=true;
         }
         catch(Exception e) {
-          System.err.println("grr");
           inLibrary = true;
         }
       }
@@ -252,7 +259,6 @@ class Library {
           inWindow=true;
         }
         catch(Exception e) {
-          System.err.println("grr");
           inLibrary = true;
         }
       }

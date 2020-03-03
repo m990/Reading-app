@@ -8,7 +8,7 @@ int currentPage;
 public static boolean inLibrary = true;
 public static boolean inWindow = false;
 void setup() {
-  size(500, 500);
+  size(750, 750);
   String cover1 = "Art Example Two.png";
   String cover2 = "Art Example Three.png";
   
