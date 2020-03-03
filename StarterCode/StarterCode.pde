@@ -19,6 +19,12 @@ void setup() {
             l.addBook(b2);
        }
   }
+    RetrieveData r = new RetrieveData();
+  try{
+    println(r.retrieveData("http://localhost:8080/all"));
+  }catch (Exception e){
+    println(e);
+  }
 }
 
 void draw() {
