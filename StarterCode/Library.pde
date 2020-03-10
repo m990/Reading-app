@@ -107,6 +107,13 @@ class Library {
     clear.setVisible(true);
     cp5.getController("Search").getCaptionLabel().setVisible(false);
 
+    if(tf.isFocus() && keyPressed) {
+      if(key==ENTER || key==RETURN) {
+        searchQuery = tf.getText();
+        spot = 0;
+        currentPage = 0;
+      }
+    }
     // Divide treeMap into 2d array so it can be iterated over.
     ArrayList<ArrayList<Book>> libraryPages = convertToMat(searchQuery);
     //num of books in libraryPages
@@ -138,12 +145,6 @@ class Library {
           currentPage--;
         } 
       delay(50);
-      }
-    }
-
-    if(tf.isFocus() && keyPressed) {
-      if(key==ENTER || key==RETURN) {
-        searchQuery = tf.getText();
       }
     }
     
