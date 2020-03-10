@@ -7,6 +7,7 @@ Book b1;
 int currentPage;
 public static boolean inLibrary = true;
 public static boolean inWindow = false;
+JSONArray values;
 void setup() {
   size(500, 500);
   String cover1 = "Art Example Two.png";
@@ -23,6 +24,26 @@ void setup() {
   l = new Library();
   
   currentPage = l.getCurrentPage();
+  
+  RetrieveData r = new RetrieveData();
+  try{
+    println(r.retrieveData("http://localhost:8080/all"));
+    String data = r.retrieveData("http://localhost:8080/all");
+    values = parseJSONArray(data);
+    if (values == null){
+      println("JSONArray could not be parsed");
+    }
+    else{
+      //String book = values.getString(1);
+      print(values.getJSONObject(0).getString("title"));
+      JSONObject book = values.getJSONObject(0);
+      Book b4 = new Book(book.getString("title"), 4, p, ("data/"+book.getString("image")));
+      l.addBook(b4);
+    }
+    
+  }catch (Exception e){
+    println(e);
+  }
   
   background(0, 0, 0);
   /*for(int i = 0; i<34; i++){
