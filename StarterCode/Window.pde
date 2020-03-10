@@ -32,8 +32,7 @@ class Window {
   
   PImage homeIcon;
   
-  boolean stay;
-  
+
   Statistics stat;
   public Window(Book b) {
     firstPage = 1;
@@ -49,18 +48,15 @@ class Window {
     
     buttonOver = false;
     button2Over = false;
-    homeOver = false;
     
     buttonClicked = false;
     button2Clicked = false;
-    homeClicked = false;
-    
-    homeIcon = loadImage("homeicon.png");
-    
-    stay = true;
   }
-  
+
   void drawWindow() {
+        
+    homeIcon = loadImage("homeicon.png");
+
     //displays p's data and cBook's title
     //p's data is the text and image
     //button2X-width/25
@@ -103,11 +99,10 @@ class Window {
        forward = false;
        stat.numBooksRead++;
     }
-     //<>//
-    //displaying buttons //<>//
+    //displaying buttons
     stroke(0, 0, 0);
     fill(192, 192, 192);
-    if(back) {
+    if(back) { //<>//
       if(!buttonClicked) {
         fill(buttonColor);
         triangle(buttonX, buttonY+(buttonHeight/2), buttonX+buttonWidth, buttonY+buttonHeight, buttonX+buttonWidth, buttonY);
@@ -137,12 +132,19 @@ class Window {
     
     update();
   }
-
+  void setBook(Book book){
+    cBook = book;
+    cPage = cBook.pages[cBook.getCurPage()-1];
+  }
+  Book getBook(){
+    return cBook;
+  }
+  
   void mousePressed() {
     if(buttonOver) {
       buttonClicked = true; 
-    } else { //<>//
-      buttonClicked = false;  //<>//
+    } else {
+      buttonClicked = false;
     }
     if(button2Over) {
       button2Clicked = true; 
@@ -170,7 +172,8 @@ class Window {
     if(homeOver) {
       //have functionality to return to library
       //l.drawLibrary();
-      stay = false;
+      inLibrary = true;
+      inWindow = false;
     }
   }
   
@@ -219,7 +222,4 @@ class Window {
     }
   }
   
-  boolean getStay() {
-    return stay;
-  }
 }
