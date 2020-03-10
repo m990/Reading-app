@@ -102,12 +102,18 @@ class Library {
   
   //draws the library
   void drawLibrary(){
+    clear();
     tf.setVisible(true);
     clear.setVisible(true);
     cp5.getController("Search").getCaptionLabel().setVisible(false);
 
+    // Divide treeMap into 2d array so it can be iterated over.
+    ArrayList<ArrayList<Book>> libraryPages = convertToMat(searchQuery);
+    //num of books in libraryPages
+    int numBooks = 4*(libraryPages.size()-1)+libraryPages.get(libraryPages.size()-1).size();
+    println(numBooks);
     //button click checks
-    if(spot*4+4 < books.size()) {
+    if(spot*4+4 < numBooks) {
       fill(254, 254, 254);
       triangle(0.93*width, 0.45*height, 0.97*width, 0.5*height, 0.93*width, 0.55*height);
       if (mousePressed){
@@ -115,7 +121,6 @@ class Library {
         if (c == color(254, 254, 254)){
            fill(1, 1, 1);
            spot++;
-           changed = true;
            currentPage++;
         }
         delay(50);
@@ -131,7 +136,6 @@ class Library {
           fill(50, 50, 50);
           spot--;
           currentPage--;
-          changed = true;
         } 
       delay(50);
       }
@@ -163,18 +167,7 @@ class Library {
     float xOffset = (float) width/10;
     float yOffset = (float)((double)height/10) + (int) ((double) 1/2 * (double) (newHeight - (double) coverHeight/columns - (double) (columns-1)* (double) yPos/columns));
     
-    // Divide treeMap into 2d array so it can be iterated over.
-    ArrayList<ArrayList<Book>> libraryPages = convertToMat(searchQuery);
-    //drawing books that belong to spot/page
-    int bookIterator = 0;
-    
-    for(Book b:libraryPages.get(spot)) {
-      // iterate over treemap for each book.
-      PImage cover = b.getCoverImg();
-      cover.resize(coverWidth/columns, coverHeight/columns);
-      image(cover, xOffset+(bookIterator % (2)) * xPos/columns, yOffset+(bookIterator - (bookIterator % (2)))/( columns) * yPos/columns);
-      bookIterator++;
-    }
+
   
     //drawing books that belong to spot/page
     int bookIterator = 0;
@@ -185,109 +178,45 @@ class Library {
       image(cover, xOffset+(bookIterator % (2)) * xPos/columns, yOffset+(bookIterator - (bookIterator % (2)))/( columns) * yPos/columns);
       bookIterator++;
     }
-    
-    if(changed){
-      background(0,0,0);
-      drawLibrary();
-    }
+
       if (mousePressed){
+        int booksOnPage = libraryPages.get(currentPage).size();
     // top left corner button
-            ArrayList<Book> bookList = new ArrayList<Book>(books.values());
       if (mouseX > 78 && mouseX < 214 && mouseY > 99 && mouseY < 241){
         inLibrary = false;
-        println("top left is pressed");
-        /*if (currentPage == 1){
-          w.setBook(books.get(0));
-          w.drawWindow();
-        }*/
-        ArrayList<Book> topLeftBooks = new ArrayList<Book>();
-        for (int i = 0; i < bookList.size(); i++){
-          if (i % 4 == 0){
-            topLeftBooks.add(bookList.get(i));
-          }
-        }
-        for (int i = 0; i < topLeftBooks.size(); i++){
-          println(topLeftBooks.get(i).getTitle());
-        }
-        try {
           
-          w.setBook(topLeftBooks.get(currentPage));
+          w.setBook(libraryPages.get(currentPage).get(0));
           //w.drawWindow();
           inWindow=true;
-        }
-        catch(Exception e) {
-          System.err.println("grr");
-          inLibrary = true;
-        }
+          tf.setVisible(false);
+          clear.setVisible(false);
       }
-      if (mouseX > 289 && mouseX < 427 && mouseY > 99 && mouseY < 241){
+      if (booksOnPage>=2 && mouseX > 289 && mouseX < 427 && mouseY > 99 && mouseY < 241){
         inLibrary = false;
-        println("top right is pressed");
-        ArrayList<Book> topRightBooks = new ArrayList<Book>();
-        for (int i = 0; i < bookList.size(); i++){
-          if (i % 4 == 1){
-            topRightBooks.add(bookList.get(i));
-          }
-        }
-        for (int i = 0; i < topRightBooks.size(); i++){
-          println(topRightBooks.get(i).getTitle());
-        }
-         try {
           
-          w.setBook(topRightBooks.get(currentPage));
+          w.setBook(libraryPages.get(currentPage).get(1));
           //w.drawWindow();
           inWindow=true;
-        }
-        catch(Exception e) {
-          System.err.println("grr");
-          inLibrary = true;
-        }
+          tf.setVisible(false);
+          clear.setVisible(false);
       }
-      if (mouseX > 78 && mouseX < 214 && mouseY > 314 && mouseY < 453){
+      if (booksOnPage>=3 && mouseX > 78 && mouseX < 214 && mouseY > 314 && mouseY < 453){
         inLibrary = false;
-        println("bottom left is pressed");
-        ArrayList<Book> topRightBooks = new ArrayList<Book>();
-        for (int i = 0; i < bookList.size(); i++){
-          if (i % 4 == 2){
-            topRightBooks.add(bookList.get(i));
-          }
-        }
-        for (int i = 0; i < topRightBooks.size(); i++){
-          println(topRightBooks.get(i).getTitle());
-        }
-        try {
+        
           
-          w.setBook(topRightBooks.get(currentPage));
+          w.setBook(libraryPages.get(currentPage).get(2));
           //w.drawWindow();
           inWindow=true;
-        }
-        catch(Exception e) {
-          System.err.println("grr");
-          inLibrary = true;
-        }
+          tf.setVisible(false);
+          clear.setVisible(false);
       }
-      if (mouseX > 289 && mouseX < 427 && mouseY > 314 && mouseY < 453){
-                inLibrary = false;
-        println("bottom right is pressed");
-        ArrayList<Book> topRightBooks = new ArrayList<Book>();
-        for (int i = 0; i < bookList.size(); i++){
-          if (i % 4 == 3){
-            topRightBooks.add(bookList.get(i));
-          }
-        }
-        for (int i = 0; i < topRightBooks.size(); i++){
-          println(topRightBooks.get(i).getTitle());
-        }
-               try {
-          
-          w.setBook(topRightBooks.get(currentPage));
+      if (booksOnPage>=4 && mouseX > 289 && mouseX < 427 && mouseY > 314 && mouseY < 453){
+          inLibrary = false;
+          w.setBook(libraryPages.get(currentPage).get(3));
           //w.drawWindow();
           inWindow=true;
-        }
-        catch(Exception e) {
-          System.err.println("grr");
-          inLibrary = true;
-        }
+          tf.setVisible(false);
+          clear.setVisible(false);
       }
      }
   }
@@ -300,6 +229,8 @@ class Library {
         temporaryList.add(entry.getValue());
       } else if(entry.getKey().toLowerCase().contains(filter.toLowerCase())) {
         temporaryList.add(entry.getValue());
+      } else {
+        continue;
       }
       
       if (it == 3) {

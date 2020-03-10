@@ -20,8 +20,8 @@ void setup() {
   Book b2 = new Book("Test2", 1, p2, cover2);
   Book b3 = new Book("Test3", 1, p2, cover2);
   
-  w = new Window();
-  l = new Library();
+  w = new Window(b1);
+  l = new Library(this);
   
   currentPage = l.getCurrentPage();
   
