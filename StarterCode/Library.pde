@@ -84,6 +84,8 @@ class Library {
   void drawLibrary(){
     clear();
     boolean changed = false;
+    
+    // Draws front arrow
     if((spot+1)*columns*columns < books.size()) {
       fill(254, 254, 254);
       triangle(0.93*width, 0.45*height, 0.97*width, 0.5*height, 0.93*width, 0.55*height);
@@ -99,6 +101,8 @@ class Library {
       }
       triangle(0.93*width, 0.45*height, 0.97*width, 0.5*height, 0.93*width, 0.55*height); 
     }
+    
+    // Draws back arrow
     if(spot>0) {
       fill(253, 253, 253);
       triangle(0.07*width, 0.45*height, 0.03*width, 0.5*height, 0.07*width, 0.55*height);
@@ -118,11 +122,14 @@ class Library {
     // 1/30th (1/3 of 1/10 of height)
     textSize((int) ((double)1 / (double)15 * (double)height));
     text("Your Library", (int)((double)1/(double)40 * (double)width), (int)((double)3/(double)40 * (double)height));
+    
     // Line
     fill(255, 255, 2500);
     stroke(126);
+    
     // Line across screen at 10% down
     line(0, (int)((double)height/(double)10), width, (int)((double)height/(double)10));
+    
     // Books
     int coverWidth = width*285/500;
     int coverHeight = height*285/500;
@@ -137,6 +144,7 @@ class Library {
     ArrayList<ArrayList<Book>> libraryPages = new ArrayList<ArrayList<Book>>();
     ArrayList<Book> temporaryList = new ArrayList<Book>();
     int it = 0;
+    
     for(Map.Entry<String,Book> entry: books.entrySet()) {
       temporaryList.add(entry.getValue());
       if (it == columns*columns-1) {
@@ -147,7 +155,6 @@ class Library {
       else {
        it++; 
       }
-
     }
     if(temporaryList.size() > 0) {
       libraryPages.add(temporaryList); 
@@ -189,72 +196,6 @@ class Library {
         try {
           
           w.setBook(topLeftBooks.get(currentPage));
-          //w.drawWindow();
-          inWindow=true;
-        }
-        catch(Exception e) {
-          inLibrary = true;
-        }
-      }
-      if (mouseX > 289 && mouseX < 427 && mouseY > 99 && mouseY < 241){
-        inLibrary = false;
-        println("top right is pressed");
-        ArrayList<Book> topRightBooks = new ArrayList<Book>();
-        for (int i = 0; i < bookList.size(); i++){
-          if (i % 4 == 1){
-            topRightBooks.add(bookList.get(i));
-          }
-        }
-        for (int i = 0; i < topRightBooks.size(); i++){
-          println(topRightBooks.get(i).getTitle());
-        }
-         try {
-          
-          w.setBook(topRightBooks.get(currentPage));
-          //w.drawWindow();
-          inWindow=true;
-        }
-        catch(Exception e) {
-          inLibrary = true;
-        }
-      }
-      if (mouseX > 78 && mouseX < 214 && mouseY > 314 && mouseY < 453){
-        inLibrary = false;
-        println("bottom left is pressed");
-        ArrayList<Book> topRightBooks = new ArrayList<Book>();
-        for (int i = 0; i < bookList.size(); i++){
-          if (i % 4 == 2){
-            topRightBooks.add(bookList.get(i));
-          }
-        }
-        for (int i = 0; i < topRightBooks.size(); i++){
-          println(topRightBooks.get(i).getTitle());
-        }
-        try {
-          
-          w.setBook(topRightBooks.get(currentPage));
-          //w.drawWindow();
-          inWindow=true;
-        }
-        catch(Exception e) {
-          inLibrary = true;
-        }
-      }
-      if (mouseX > 289 && mouseX < 427 && mouseY > 314 && mouseY < 453){
-                inLibrary = false;
-        println("bottom right is pressed");
-        ArrayList<Book> topRightBooks = new ArrayList<Book>();
-        for (int i = 0; i < bookList.size(); i++){
-          if (i % 4 == 3){
-            topRightBooks.add(bookList.get(i));
-          }
-        }
-        for (int i = 0; i < topRightBooks.size(); i++){
-          println(topRightBooks.get(i).getTitle());
-        }
-               try {
-          
-          w.setBook(topRightBooks.get(currentPage));
           //w.drawWindow();
           inWindow=true;
         }
