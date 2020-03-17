@@ -54,7 +54,7 @@ class Library {
     books.put("User Guide13", new Book("User Guide", 3, examplePages, "Centered? User Guide Title.png"));
 
     spot = 0;
-    columns = 2;
+    columns = width/250;
     currentPage = 0;
     
     buttonColor = color(193, 193, 193);
@@ -127,11 +127,12 @@ class Library {
     }
     // Divide treeMap into 2d array so it can be iterated over.
     ArrayList<ArrayList<Book>> libraryPages = convertToMat(searchQuery);
+    
     //num of books in libraryPages
-    int numBooks = 4*(libraryPages.size()-1)+libraryPages.get(libraryPages.size()-1).size();
+    int numBooks = columns*columns*(libraryPages.size()-1)+libraryPages.get(libraryPages.size()-1).size();
     println(numBooks);
     //button click checks
-    if(spot*4+4 < numBooks) {
+    if(spot*columns*columns+columns*columns < numBooks) {
       fill(254, 254, 254);
       triangle(0.93*width, 0.45*height, 0.97*width, 0.5*height, 0.93*width, 0.55*height);
       if (mousePressed){
@@ -250,7 +251,7 @@ class Library {
         continue;
       }
       
-      if (it == 3) {
+      if (it == columns*columns-1) {
        it = 0;
        libraryPages.add(temporaryList);
        temporaryList = new ArrayList<Book>();
