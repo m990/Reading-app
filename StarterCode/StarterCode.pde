@@ -18,8 +18,8 @@ void setup() {
   Page[] p = {new Page("I ran.", "pixil-frame-0.png", color(255, 255, 255)), new Page("I ran2.", "img2.png", color(255, 255, 255))};
   Page[] p2 = {new Page("Text", "Art Example One.png", color(0, 0, 0))};
   Book b1 = new Book("Test", 2, p, cover1);
-  Book b2 = new Book("Test2", 1, p2, cover2);
-  Book b3 = new Book("Test3", 1, p2, cover2);
+  //Book b2 = new Book("Test2", 1, p2, cover2);
+  //Book b3 = new Book("Test3", 1, p2, cover2);
   
   w = new Window(b1);
   l = new Library(this);
@@ -36,21 +36,29 @@ void setup() {
     }
     else{
       //String book = values.getString(1);
+      // this should just repeat until all books are added
+      
+      // book 1
       print(values.getJSONObject(0).getString("title"));
       JSONObject book = values.getJSONObject(0);
-      Book b4 = new Book(book.getString("title"), 4, p, ("data/"+book.getString("image")));
+      Book b4 = new Book(book.getString("title"), book.getInt("pageNumber"), p, ("data/"+book.getString("image")));
+      l.addBook(b4);
+      
+      // book 2
+      book = values.getJSONObject(1);
+      b4 = new Book(book.getString("title"), book.getInt("pageNumber"), p, ("data/"+book.getString("image")));
       l.addBook(b4);
     }
     
-  }catch (Exception e){
+  }catch (Exception e){ //<>//
     println(e);
   }
   
   background(0, 0, 0);
   
   l.addBook(b1);
-  l.addBook(b2);
-  l.addBook(b3);
+  //l.addBook(b2);
+  //l.addBook(b3);
 }
 
 void draw() {
