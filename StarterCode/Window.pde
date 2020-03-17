@@ -32,12 +32,12 @@ class Window {
   
   PImage homeIcon;
   
-  boolean stay;
-  
-  Statistics stat = new Statistics();
-  
-  void initialize(Book bs){
-    cBook = bs;
+
+  Statistics stat;
+  public Window(Book b) {
+    firstPage = 1;
+    stat = new Statistics();
+    cBook = b;
     cPage = cBook.pages[cBook.getCurPage()-1];
     
     buttonColor = color(193, 193, 193);
@@ -52,13 +52,11 @@ class Window {
     buttonClicked = false;
     button2Clicked = false;
   }
-  
-  
+
   void drawWindow() {
         
     homeIcon = loadImage("homeicon.png");
-    
-    stay = true;
+
     //displays p's data and cBook's title
     //p's data is the text and image
     //button2X-width/25
@@ -136,17 +134,17 @@ class Window {
   }
   void setBook(Book book){
     cBook = book;
-    initialize(book);
+    cPage = cBook.pages[cBook.getCurPage()-1];
   }
   Book getBook(){
     return cBook;
   }
   
-  void mousePressed() { //<>//
+  void mousePressed() {
     if(buttonOver) {
       buttonClicked = true; 
-    } else { //<>//
-      buttonClicked = false; 
+    } else {
+      buttonClicked = false;
     }
     if(button2Over) {
       button2Clicked = true; 
@@ -176,7 +174,6 @@ class Window {
       //l.drawLibrary();
       inLibrary = true;
       inWindow = false;
-      stay = false;
     }
   }
   
@@ -223,10 +220,6 @@ class Window {
     } else {
       homeOver = false;
     }
-  }
-  
-  boolean getStay() {
-    return stay;
   }
   
 }
