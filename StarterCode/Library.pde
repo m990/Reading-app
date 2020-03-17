@@ -31,6 +31,8 @@ class Library {
   Button clear;
 
   String searchQuery;
+  
+  ArrayList<ArrayList<Book>> libraryPages;
 
   //constructors
   public Library(PApplet p) {
@@ -78,6 +80,7 @@ class Library {
     clear.setFont(createFont("Arial", 11));
 
     searchQuery = "";
+    libraryPages = null;
   }
   
   public Library(PApplet p, TreeMap<String, Book> books){
@@ -115,10 +118,15 @@ class Library {
       }
     }
     // Divide treeMap into 2d array so it can be iterated over.
-    ArrayList<ArrayList<Book>> libraryPages = convertToMat(searchQuery);
+    libraryPages = convertToMat(searchQuery);
     //num of books in libraryPages
-    int numBooks = 4*(libraryPages.size()-1)+libraryPages.get(libraryPages.size()-1).size();
-    println(numBooks);
+    int numBooks;
+    if(libraryPages.size() == 0) {
+      numBooks = 0;
+    } else {
+      numBooks = 4*(libraryPages.size()-1)+libraryPages.get(libraryPages.size()-1).size();
+    }
+    
     //button click checks
     if(spot*4+4 < numBooks) {
       fill(254, 254, 254);
@@ -158,7 +166,17 @@ class Library {
     stroke(126);
     // Line across screen at 10% down
     line(0, (int)((double)height/(double)10), width, (int)((double)height/(double)10));
-    // Books
+
+    if(numBooks!=0) {
+      drawBooks();
+      implementButtons(currentPage);
+    } else {
+      println("Book not found");
+    }
+    
+  }
+
+  void drawBooks() {
     int coverWidth = width*285/500;
     int coverHeight = height*285/500;
     float xPos = width*428/500;
@@ -167,9 +185,6 @@ class Library {
     int newHeight = height - (int)((double)height/(double)10);
     float xOffset = (float) width/10;
     float yOffset = (float)((double)height/10) + (int) ((double) 1/2 * (double) (newHeight - (double) coverHeight/columns - (double) (columns-1)* (double) yPos/columns));
-    
-
-  
     //drawing books that belong to spot/page
     int bookIterator = 0;
     for(Book b:libraryPages.get(spot)) {
@@ -179,48 +194,47 @@ class Library {
       image(cover, xOffset+(bookIterator % (2)) * xPos/columns, yOffset+(bookIterator - (bookIterator % (2)))/( columns) * yPos/columns);
       bookIterator++;
     }
+  }
 
-      if (mousePressed){
-        int booksOnPage = libraryPages.get(currentPage).size();
-    // top left corner button
+  void implementButtons(int currentPage) {
+    if (mousePressed){
+      int booksOnPage = libraryPages.get(currentPage).size();
+      // top left corner button
       if (mouseX > 78 && mouseX < 214 && mouseY > 99 && mouseY < 241){
         inLibrary = false;
-          
-          w.setBook(libraryPages.get(currentPage).get(0));
-          //w.drawWindow();
-          inWindow=true;
-          tf.setVisible(false);
-          clear.setVisible(false);
+        w.setBook(libraryPages.get(currentPage).get(0));
+        //w.drawWindow();
+        inWindow=true;
+        tf.setVisible(false);
+        clear.setVisible(false);
       }
       if (booksOnPage>=2 && mouseX > 289 && mouseX < 427 && mouseY > 99 && mouseY < 241){
         inLibrary = false;
-          
-          w.setBook(libraryPages.get(currentPage).get(1));
-          //w.drawWindow();
-          inWindow=true;
-          tf.setVisible(false);
-          clear.setVisible(false);
+        w.setBook(libraryPages.get(currentPage).get(1));
+        //w.drawWindow();
+        inWindow=true;
+        tf.setVisible(false);
+        clear.setVisible(false);
       }
       if (booksOnPage>=3 && mouseX > 78 && mouseX < 214 && mouseY > 314 && mouseY < 453){
         inLibrary = false;
-        
-          
-          w.setBook(libraryPages.get(currentPage).get(2));
-          //w.drawWindow();
-          inWindow=true;
-          tf.setVisible(false);
-          clear.setVisible(false);
+        w.setBook(libraryPages.get(currentPage).get(2));
+        //w.drawWindow();
+        inWindow=true;
+        tf.setVisible(false);
+        clear.setVisible(false);
       }
       if (booksOnPage>=4 && mouseX > 289 && mouseX < 427 && mouseY > 314 && mouseY < 453){
-          inLibrary = false;
-          w.setBook(libraryPages.get(currentPage).get(3));
-          //w.drawWindow();
-          inWindow=true;
-          tf.setVisible(false);
-          clear.setVisible(false);
+        inLibrary = false;
+        w.setBook(libraryPages.get(currentPage).get(3));
+        //w.drawWindow();
+        inWindow=true;
+        tf.setVisible(false);
+        clear.setVisible(false);
       }
      }
   }
+
   ArrayList<ArrayList<Book>> convertToMat(String filter) {
     ArrayList<ArrayList<Book>> libraryPages = new ArrayList<ArrayList<Book>>();
     ArrayList<Book> temporaryList = new ArrayList<Book>();
