@@ -8,7 +8,7 @@ public static boolean inLibrary = true;
 public static boolean inWindow = false;
 
 void setup() {
-  size(500, 500);
+  size(750, 750);
   // For now, this is only used to launch the window because it requires a book to be launched.
   // This book isn't used otherwise and is not the same as the default book
   String cover1 = "Art Example Two.png";

@@ -199,8 +199,19 @@ class Library {
 
       if (mousePressed){
         int booksOnPage = libraryPages.get(currentPage).size();
+        int currentColumn = (int) ((mouseX-(int) xOffset)- (((mouseX-(int) xOffset))%((int) xPos/columns)))/((int) xPos/columns);
+        int currentRow = (int) ((mouseY-(int) yOffset)- (((mouseY-(int) yOffset))%((int) yPos/columns)))/((int) yPos/columns);
     // top left corner button
-      if (mouseX > 78 && mouseX < 214 && mouseY > 99 && mouseY < 241){
+        if((((mouseX-(int) xOffset))%((int) xPos/columns)) <= coverWidth/columns && (((mouseY-(int) yOffset))%((int) yPos/columns)) <= coverWidth/columns){
+          if(booksOnPage>columns*currentRow+currentColumn){
+            inLibrary = false;
+            w.setBook(libraryPages.get(currentPage).get(columns*currentRow+currentColumn));
+            inWindow=true;
+            tf.setVisible(false);
+            clear.setVisible(false);
+          }
+        }
+      /*if (mouseX > 78 && mouseX < 214 && mouseY > 99 && mouseY < 241){
         inLibrary = false;
           
           w.setBook(libraryPages.get(currentPage).get(0));
@@ -236,6 +247,7 @@ class Library {
           tf.setVisible(false);
           clear.setVisible(false);
       }
+      */
      }
   }
   ArrayList<ArrayList<Book>> convertToMat(String filter) {
