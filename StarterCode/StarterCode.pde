@@ -1,12 +1,15 @@
 // Instead of creating a window object with a book, you have a window object and you have a setter that puts in the book later
 // Put all visual stuff inside a second method
 
+import de.bezier.data.sql.*;
+
 Library l;
 Window w;
 int currentPage;
 public static boolean inLibrary = true;
 public static boolean inWindow = false;
 JSONArray values;
+MySQL db;
 
 void setup() {
   size(500, 500);
@@ -14,6 +17,8 @@ void setup() {
   // This book isn't used otherwise and is not the same as the default book
   String cover1 = "Art Example Two.png";
   String cover2 = "Art Example Three.png";
+  
+  db = new MySQL(this, "localhost", "../readingapp.db", "", "");
   
   Page[] p = {new Page("I ran.", "pixil-frame-0.png", color(255, 255, 255)), new Page("I ran2.", "img2.png", color(255, 255, 255))};
   Page[] p2 = {new Page("Text", "Art Example One.png", color(0, 0, 0))};
@@ -43,6 +48,12 @@ void setup() {
       JSONObject book = values.getJSONObject(0);
       Book b4 = new Book(book.getString("title"), book.getInt("pageNumber"), p, ("data/"+book.getString("image")));
       l.addBook(b4);
+      
+      // local database
+      while (db.connect()){
+        db.query("INSERT INTO User (id, name, password) VALUES (%s, %s, %s, %s, %s)", 0, "Max", "Rush");
+        db.close();
+      }
       
       // book 2
       book = values.getJSONObject(1);
