@@ -32,6 +32,8 @@ class Library {
 
   String searchQuery;
 
+  ArrayList<ArrayList<Book>> libraryPages;
+
   //constructors
   public Library(PApplet p) {
 
@@ -125,11 +127,11 @@ class Library {
       }
     }
     // Divide treeMap into 2d array so it can be iterated over.
-    ArrayList<ArrayList<Book>> libraryPages = convertToMat(searchQuery);
+    libraryPages = convertToMat(searchQuery);
 
     //num of books in libraryPages
-    int numBooks = columns*columns*(libraryPages.size()-1)+libraryPages.get(libraryPages.size()-1).size();
-    println(numBooks);
+    int numBooks = libraryPages.size() == 0 ? 0 : 4*(libraryPages.size()-1)+libraryPages.get(libraryPages.size()-1).size();
+    
     //button click checks
     if (spot*columns*columns+columns*columns < numBooks) {
       fill(254, 254, 254);
@@ -174,17 +176,22 @@ class Library {
     // Line across screen at 10% down
     line(0, (int)((double)height/(double)10), width, (int)((double)height/(double)10));
 
-    // Books
+    if(numBooks!=0) {
+      drawBooks();
+      implementButtons();
+    } else {
+      println("Book not found");
+    }
+  }
+
+  void drawBooks() {
     int coverWidth = width*285/500;
     int coverHeight = height*285/500;
     float xPos = width*428/500;
     float yPos = height*428/500;
-
     int newHeight = height - (int)((double)height/(double)10);
     float xOffset = (float) width/10;
     float yOffset = (float)((double)height/10) + (int) ((double) 1/columns * (double) (newHeight - (double) coverHeight/columns - (double) (columns-1)* (double) yPos/columns));
-
-
 
     //drawing books that belong to spot/page
     int bookIterator = 0;
@@ -195,8 +202,17 @@ class Library {
       image(cover, xOffset+(bookIterator % (columns)) * xPos/columns, yOffset+(bookIterator - (bookIterator % (columns)))/(columns) * yPos/columns);
       bookIterator++;
     }
+  }
 
+  void implementButtons() {
     if (mousePressed) {
+      int newHeight = height - (int)((double)height/(double)10);
+      int coverWidth = width*285/500;
+      int coverHeight = height*285/500;
+      float xPos = width*428/500;
+      float yPos = height*428/500;
+      float xOffset = (float) width/10;
+      float yOffset = (float)((double)height/10) + (int) ((double) 1/columns * (double) (newHeight - (double) coverHeight/columns - (double) (columns-1)* (double) yPos/columns));
       int booksOnPage = libraryPages.get(currentPage).size();
       int currentColumn = (int) ((mouseX-(int) xOffset)- (((mouseX-(int) xOffset))%((int) xPos/columns)))/((int) xPos/columns);
       int currentRow = (int) ((mouseY-(int) yOffset)- (((mouseY-(int) yOffset))%((int) yPos/columns)))/((int) yPos/columns);
@@ -212,6 +228,7 @@ class Library {
       }
     }
   }
+
   ArrayList<ArrayList<Book>> convertToMat(String filter) {
     ArrayList<ArrayList<Book>> libraryPages = new ArrayList<ArrayList<Book>>();
     ArrayList<Book> temporaryList = new ArrayList<Book>();
