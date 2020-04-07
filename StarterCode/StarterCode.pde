@@ -9,7 +9,8 @@ int currentPage;
 public static boolean inLibrary = true;
 public static boolean inWindow = false;
 JSONArray values;
-MySQL db;
+//MySQL db;
+SQLite db;
 
 void setup() {
   size(500, 500);
@@ -18,7 +19,7 @@ void setup() {
   String cover1 = "Art Example Two.png";
   String cover2 = "Art Example Three.png";
   
-  db = new MySQL(this, "localhost", "../readingapp.db", "", "");
+  db = new SQLite(this, "readingapp.db");
   
   Page[] p = {new Page("I ran.", "pixil-frame-0.png", color(255, 255, 255)), new Page("I ran2.", "img2.png", color(255, 255, 255))};
   Page[] p2 = {new Page("Text", "Art Example One.png", color(0, 0, 0))};
@@ -44,21 +45,49 @@ void setup() {
       // this should just repeat until all books are added
       
       // book 1
-      print(values.getJSONObject(0).getString("title"));
+      /*print(values.getJSONObject(0).getString("title"));
       JSONObject book = values.getJSONObject(0);
       Book b4 = new Book(book.getString("title"), book.getInt("pageNumber"), p, ("data/"+book.getString("image")));
-      l.addBook(b4);
+      l.addBook(b4);*/
       
       // local database
-      while (db.connect()){
-        db.query("INSERT INTO User (id, name, password) VALUES (%s, %s, %s, %s, %s)", 0, "Max", "Rush");
-        db.close();
-      }
       
+      
+      //example of adding data to the database
+      /*if (db.connect()){
+        print("connected");
+        db.query("INSERT INTO User VALUES (0, 'Max Norman', 'Rush')");
+        db.close();
+      }*/
+      int id;
+      String author;
+      int copyright;
+      String description;
+      String image;
+      int pageNumber;
+      String title;
+      String sql;
+      
+      if (db.connect()){
+        println("Total number of items in the cloud: " + values.size());
+        
+        for (int i = 0; i < values.size(); i++){
+          id = values.getJSONObject(i).getInt("id");          
+          author = values.getJSONObject(i).getString("author");
+          copyright = values.getJSONObject(i).getInt("copyright");
+          description = values.getJSONObject(i).getString("description");
+          image = values.getJSONObject(i).getString("image");
+          pageNumber = values.getJSONObject(i).getInt("pageNumber");
+          title = values.getJSONObject(i).getString("title");
+          sql = "INSERT INTO BOOK VALUES(" + id + ", '" + author + "', " + copyright + ", '" + description + "', '" + image + "', " + pageNumber + ", '" + title + "')";
+          db.query(sql);
+        }
+      }
+     
       // book 2
-      book = values.getJSONObject(1);
+      /*book = values.getJSONObject(1);
       b4 = new Book(book.getString("title"), book.getInt("pageNumber"), p, ("data/"+book.getString("image")));
-      l.addBook(b4);
+      l.addBook(b4);*/
     }
     
   }catch (Exception e){ //<>//

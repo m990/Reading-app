@@ -111,7 +111,7 @@ class Library {
     ArrayList<ArrayList<Book>> libraryPages = convertToMat(searchQuery);
     //num of books in libraryPages
     int numBooks = 4*(libraryPages.size()-1)+libraryPages.get(libraryPages.size()-1).size();
-    println(numBooks);
+    //println(numBooks);
     //button click checks
     if(spot*4+4 < numBooks) {
       fill(254, 254, 254);

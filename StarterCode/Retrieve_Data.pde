@@ -3,7 +3,7 @@
 // Dummy data to put into the h2-console: 
 
 
-// INSERT INTO BOOK VALUES(0, 'Eric Park', 2020, 'The story of a promising man who left his friends for volley ball.', 'image_The Life and Tragedy of Eli William Browne.png', 1, 'The Life and Tragedy of Eli Willaim Browne');
+// INSERT INTO BOOK VALUES(0, 'Eric Park', 2020, 'The story of a promising man who left his friends for volley ball.', 'image_The Life and Tragedy of Eli William Browne.png', 1, 'The Life and Tragedy of Eli William Browne');
 // INSERT INTO BOOK VALUES(1, 'Max J. Norman', 2020, 'The life of the greatest drummer, author, and motorcyclist to ever have lived.', 'image_The Best Drummer.png', 1, 'The Best Drummer');
 
 import java.net.*;
