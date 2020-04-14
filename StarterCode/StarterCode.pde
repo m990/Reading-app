@@ -59,30 +59,7 @@ void setup() {
         db.query("INSERT INTO User VALUES (0, 'Max Norman', 'Rush')");
         db.close();
       }*/
-      int id;
-      String author;
-      int copyright;
-      String description;
-      String image;
-      int pageNumber;
-      String title;
-      String sql;
       
-      if (db.connect()){
-        println("Total number of items in the cloud: " + values.size());
-        
-        for (int i = 0; i < values.size(); i++){
-          id = values.getJSONObject(i).getInt("id");          
-          author = values.getJSONObject(i).getString("author");
-          copyright = values.getJSONObject(i).getInt("copyright");
-          description = values.getJSONObject(i).getString("description");
-          image = values.getJSONObject(i).getString("image");
-          pageNumber = values.getJSONObject(i).getInt("pageNumber");
-          title = values.getJSONObject(i).getString("title");
-          sql = "INSERT INTO BOOK VALUES(" + id + ", '" + author + "', " + copyright + ", '" + description + "', '" + image + "', " + pageNumber + ", '" + title + "')";
-          db.query(sql);
-        }
-      }
      
       // book 2
       /*book = values.getJSONObject(1);
@@ -125,4 +102,30 @@ public void controlEvent(ControlEvent e) {
     if(e.getController().getName().equals("Clear")) {
       l.clearSearch();
     }
+}
+
+public void getData(){
+        int id;
+      String author;
+      int copyright;
+      String description;
+      String image;
+      int pageNumber;
+      String title;
+      String sql;
+        if (db.connect()){
+        println("Total number of items in the cloud: " + values.size());
+        
+        for (int i = 0; i < values.size(); i++){
+          id = values.getJSONObject(i).getInt("id");          
+          author = values.getJSONObject(i).getString("author");
+          copyright = values.getJSONObject(i).getInt("copyright");
+          description = values.getJSONObject(i).getString("description");
+          image = values.getJSONObject(i).getString("image");
+          pageNumber = values.getJSONObject(i).getInt("pageNumber");
+          title = values.getJSONObject(i).getString("title");
+          sql = "INSERT INTO BOOK VALUES(" + id + ", '" + author + "', " + copyright + ", '" + description + "', '" + image + "', " + pageNumber + ", '" + title + "')";
+          db.query(sql);
+        }
+      }
 }
