@@ -72,7 +72,7 @@ class Store {
     books = new ArrayList<Book>();
     storeMat = new ArrayList<ArrayList<Book>>();
 
-    db = new SQLite(new StarterCode(), "readingapp.db");
+    db = new SQLite(p, "readingapp.db");
 
     prompt = false;
 
@@ -303,7 +303,6 @@ class Store {
   //  }
   //}
   void addBook(String bookTitle){
-    db = new SQLite(new StarterCode(), "readingapp.db");
     JSONArray values;
     RetrieveData r = new RetrieveData();
     try{
@@ -332,8 +331,8 @@ class Store {
           image = values.getJSONObject(i).getString("image");
           pageNumber = values.getJSONObject(i).getInt("pageNumber");
           title = values.getJSONObject(i).getString("title");
-          //sql = "INSERT INTO Book VALUES(" + id + ", '" + author + "', " + copyright + ", '" + description + "', '" + image + "', " + pageNumber + ", '" + title + "')";
-          sql = ".tables";
+          sql = "INSERT INTO Book VALUES(" + id + ", '" + author + "', " + copyright + ", '" + description + "', '" + image + "', " + pageNumber + ", '" + title + "')";
+          //sql = ".tables";
           db.query(sql);
         }
       }

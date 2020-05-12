@@ -69,6 +69,7 @@ void setup() {
       /*book = values.getJSONObject(1);
       b4 = new Book(book.getString("title"), book.getInt("pageNumber"), p, ("data/"+book.getString("image")));
       l.addBook(b4);*/
+
     }
     
   }catch (Exception e){ //<>//
