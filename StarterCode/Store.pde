@@ -6,6 +6,8 @@ class Store {
   Textfield storeSearch;
   Button clear;
   Button toLibrary;
+  String bookTitle;
+  
 
   String searchQuery;
 
@@ -21,6 +23,11 @@ class Store {
   int columns;
 
   boolean prompt;
+
+  float pWidth = width/3;
+  float pHeight = height/3;
+  float pX = width/2-(pWidth/2);
+  float pY = height/2-(pHeight/2);
   
   public Store(PApplet p) {
     cp5 = new ControlP5(p);
@@ -150,7 +157,7 @@ class Store {
       //either no books to show or book not found
     }
 
-    if(prompt) promptUser();
+    if(prompt) promptUser(bookTitle);
   }
 
   void clearSearch() {
@@ -220,17 +227,14 @@ class Store {
       if ((((mouseX-(int) xOffset))%((int) xPos/columns)) >= 0 && (((mouseY-(int) yOffset))%((int) yPos/columns)) >= 0 &&(((mouseX-(int) xOffset))%((int) xPos/columns)) <= coverWidth/columns && (((mouseY-(int) yOffset))%((int) yPos/columns)) <= coverWidth/columns) {
         if (booksOnPage>columns*currentRow+currentColumn) {
           println("Book: "+storeMat.get(cPage).get(columns*currentRow+currentColumn).getTitle());
+          bookTitle = storeMat.get(cPage).get(columns*currentRow+currentColumn).getTitle();
           prompt = true;
         }
       }
     }
   }
 
-  void promptUser() {
-    float pWidth = width/3;
-    float pHeight = height/3;
-    float pX = width/2-(pWidth/2);
-    float pY = height/2-(pHeight/2);
+  void promptUser(String title) {
     fill(255);
     rect(pX, pY, pWidth, pHeight);
     fill(0);
@@ -255,19 +259,90 @@ class Store {
     offset = textWidth(s);
     //float hOffset = textHeight(s);
     text(s, pX+(pWidth/4)-(offset/2), base+((ascent+descent)/2));
-    
-    if ((mousePressed) && (mouseX > pX+(pWidth/4)-(pWidth/6)) && (mouseX < (pX+pWidth/3)) && (mouseY > (pY+(pHeight*5/8))) && (mouseY <((pY+(pHeight*5/8))+(pHeight/6)))){
-      println("yes button clicked");
+    if (mousePressed){
+      if(inBorder(pX+(pWidth/4)-(pWidth/6), pX+(pWidth/4)-(pWidth/6)+(pWidth/3),
+           pY+(pHeight*5/8), pY+(pHeight*5/8)+(pHeight/6))) {
+      //download book
+      println("yes");
+      addBook(title);
+      
+      
+    } else if(inBorder(pX+(3*pWidth/4)-(pWidth/6), pX+(3*pWidth/4)-(pWidth/6)+(pWidth/3),
+              pY+(pHeight*5/8), pY+(pHeight*5/8)+(pHeight/6))) {
+      println("no");
+      prompt = false;
     }
+   }
 
     s = "No";
     offset = textWidth(s);
     //hOffset = textHeight(s);
     text(s, pX+(pWidth*3/4)-(offset/2), base+((ascent+descent)/2));
-    
-    if ((mousePressed) && (mouseY > (pY+(pHeight*5/8))) && (mouseY <((pY+(pHeight*5/8))+(pHeight/6))) && (mouseX > pX+(3*pWidth/4)-(pWidth/6)) && (mouseX < (pX+(3*pWidth/4)-(pWidth/6)) + (pWidth/3))){
-      println("no button clicked");
+  }
+
+  boolean inBorder(float x1, float x2, float y1, float y2) {
+    if(mouseX < x1 || mouseX > x2 || mouseY < y1 || mouseY > y2) {
+      return false;
     }
-    
+    return true;
+  }
+
+  //void mouseClicked() {
+  //  //yes check
+  //  if(inBorder(pX+(pWidth/4)-(pWidth/6), pX+(pWidth/4)-(pWidth/6)+(pWidth/3),
+  //              pY+(pHeight*5/8), pY+(pHeight*5/8)+(pHeight/6))) {
+  //    //download book
+  //    println("yes");
+      
+      
+      
+  //  } else if(inBorder(pX+(3*pWidth/4)-(pWidth/6), pX+(3*pWidth/4)-(pWidth/6)+(pWidth/3),
+  //                     pY+(pHeight*5/8), pY+(pHeight*5/8)+(pHeight/6))) {
+  //    println("no");
+  //    prompt = false;
+  //  }
+  //}
+  void addBook(String bookTitle){
+    db = new SQLite(new StarterCode(), "readingapp.db");
+    JSONArray values;
+    RetrieveData r = new RetrieveData();
+    try{
+      String data = r.retrieveData("http://localhost:8080/all");
+      values = parseJSONArray(data);
+      if (values == null){
+        println("JSONArray could not be parsed");
+      }
+      else{
+      int id;
+      String author;
+      int copyright;
+      String description;
+      String image;
+      int pageNumber;
+      String title;
+      String sql;
+      //values.get
+      if (db.connect()){
+      for (int i = 0; i < values.size(); i++){
+        if (values.getJSONObject(i).getString("title").equals(bookTitle)){
+          id = values.getJSONObject(i).getInt("id");          
+          author = values.getJSONObject(i).getString("author");
+          copyright = values.getJSONObject(i).getInt("copyright");
+          description = values.getJSONObject(i).getString("description");
+          image = values.getJSONObject(i).getString("image");
+          pageNumber = values.getJSONObject(i).getInt("pageNumber");
+          title = values.getJSONObject(i).getString("title");
+          //sql = "INSERT INTO Book VALUES(" + id + ", '" + author + "', " + copyright + ", '" + description + "', '" + image + "', " + pageNumber + ", '" + title + "')";
+          sql = ".tables";
+          db.query(sql);
+        }
+      }
+      }
+
+    }
+  }
+  catch (Exception e){
+    println(e);
+  }
   }
 }
