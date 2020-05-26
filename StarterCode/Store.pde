@@ -8,6 +8,8 @@ class Store {
   Button toLibrary;
   String bookTitle;
   
+  String host = "http://ec2-13-56-191-183.us-west-1.compute.amazonaws.com:8080/";
+
 
   String searchQuery;
 
@@ -28,39 +30,39 @@ class Store {
   float pHeight = height/3;
   float pX = width/2-(pWidth/2);
   float pY = height/2-(pHeight/2);
-  
+
   public Store(PApplet p) {
     cp5 = new ControlP5(p);
     storeSearch = cp5.addTextfield("StoreSearch")
-    .setPosition(width*330/500, height*25/500-(height*10/500))
-    .setSize(width*100/500, height*20/500)
-    .setFont(createFont("Arial", 16))
-    .setFocus(true)
-    .setAutoClear(false)
-    .setVisible(false)
-    .setColor(color(0))
-    .setColorBackground(color(255))
-    .setColorForeground(color(255))
-    .setColorCursor(color(0));
+      .setPosition(width*330/500, height*25/500-(height*10/500))
+      .setSize(width*100/500, height*20/500)
+      .setFont(createFont("Arial", 16))
+      .setFocus(true)
+      .setAutoClear(false)
+      .setVisible(false)
+      .setColor(color(0))
+      .setColorBackground(color(255))
+      .setColorForeground(color(255))
+      .setColorCursor(color(0));
     clear = cp5.addButton("Clear")
-    .setPosition(width*440/500, height*25/500-(height*10/500))
-    .setSize(width*50/500, height*20/500)
-    .setVisible(false)
-    .setColorBackground(color(110))
-    .setColorForeground(color(90))
-    .setColorActive(color(70))
-    .setFont(createFont("Arial", 11));
+      .setPosition(width*440/500, height*25/500-(height*10/500))
+      .setSize(width*50/500, height*20/500)
+      .setVisible(false)
+      .setColorBackground(color(110))
+      .setColorForeground(color(90))
+      .setColorActive(color(70))
+      .setFont(createFont("Arial", 11));
     toLibrary = cp5.addButton("Library")
-    .setPosition(width*40/500, height*25/500-(height*10/500))
-    .setSize(width*50/500, height*20/500)
-    .setVisible(false)
-    .setColorBackground(color(110))
-    .setColorForeground(color(90))
-    .setColorActive(color(70))
-    .setFont(createFont("Arial", 11));
+      .setPosition(width*40/500, height*25/500-(height*10/500))
+      .setSize(width*50/500, height*20/500)
+      .setVisible(false)
+      .setColorBackground(color(110))
+      .setColorForeground(color(90))
+      .setColorActive(color(70))
+      .setFont(createFont("Arial", 11));
 
     searchQuery = "";
-    
+
     widgets = new Controller[3];
     widgets[0] = storeSearch;
     widgets[1] = clear;
@@ -76,20 +78,21 @@ class Store {
 
     prompt = false;
 
-    try{
+    try {
       println(rd.retrieveData("http://localhost:8080/all"));
       String data = rd.retrieveData("http://localhost:8080/all");
       values = parseJSONArray(data);
-      if (values == null){
+      if (values == null) {
         println("JSONArray could not be parsed");
-      } else{
-        for(int i = 0; i < values.size(); i++) {
+      } else {
+        for (int i = 0; i < values.size(); i++) {
           String title = values.getJSONObject(i).getString("title");
           String img = values.getJSONObject(i).getString("image");
           books.add(new Book(title, 0, new Page[] {}, img));
         }
-      } 
-    }catch (Exception e){
+      }
+    }
+    catch (Exception e) {
       println(e);
     }
   }
@@ -105,8 +108,8 @@ class Store {
 
     int numBooks = storeMat.size() == 0 ? 0 : columns*columns*(storeMat.size()-1)+storeMat.get(storeMat.size()-1).size();
 
-    if(storeSearch.isFocus() && keyPressed) {
-      if(key==ENTER || key==RETURN) {
+    if (storeSearch.isFocus() && keyPressed) {
+      if (key==ENTER || key==RETURN) {
         searchQuery =  storeSearch.getText();
         cPage = 0;
       }
@@ -150,14 +153,14 @@ class Store {
     // Line across screen at 10% down
     line(0, (int)((double)height/(double)10), width, (int)((double)height/(double)10));
 
-    if(numBooks!=0) {
+    if (numBooks!=0) {
       drawBooks();
       implementButtons();
     } else {
       //either no books to show or book not found
     }
 
-    if(prompt) promptUser(bookTitle);
+    if (prompt) promptUser(bookTitle);
   }
 
   void clearSearch() {
@@ -259,20 +262,18 @@ class Store {
     offset = textWidth(s);
     //float hOffset = textHeight(s);
     text(s, pX+(pWidth/4)-(offset/2), base+((ascent+descent)/2));
-    if (mousePressed){
-      if(inBorder(pX+(pWidth/4)-(pWidth/6), pX+(pWidth/4)-(pWidth/6)+(pWidth/3),
-           pY+(pHeight*5/8), pY+(pHeight*5/8)+(pHeight/6))) {
-      //download book
-      println("yes");
-      addBook(title);
-      
-      
-    } else if(inBorder(pX+(3*pWidth/4)-(pWidth/6), pX+(3*pWidth/4)-(pWidth/6)+(pWidth/3),
-              pY+(pHeight*5/8), pY+(pHeight*5/8)+(pHeight/6))) {
-      println("no");
-      prompt = false;
+    if (mousePressed) {
+      if (inBorder(pX+(pWidth/4)-(pWidth/6), pX+(pWidth/4)-(pWidth/6)+(pWidth/3), 
+        pY+(pHeight*5/8), pY+(pHeight*5/8)+(pHeight/6))) {
+        //download book
+        println("yes");
+        addBook(title);
+      } else if (inBorder(pX+(3*pWidth/4)-(pWidth/6), pX+(3*pWidth/4)-(pWidth/6)+(pWidth/3), 
+        pY+(pHeight*5/8), pY+(pHeight*5/8)+(pHeight/6))) {
+        println("no");
+        prompt = false;
+      }
     }
-   }
 
     s = "No";
     offset = textWidth(s);
@@ -281,7 +282,7 @@ class Store {
   }
 
   boolean inBorder(float x1, float x2, float y1, float y2) {
-    if(mouseX < x1 || mouseX > x2 || mouseY < y1 || mouseY > y2) {
+    if (mouseX < x1 || mouseX > x2 || mouseY < y1 || mouseY > y2) {
       return false;
     }
     return true;
@@ -293,55 +294,84 @@ class Store {
   //              pY+(pHeight*5/8), pY+(pHeight*5/8)+(pHeight/6))) {
   //    //download book
   //    println("yes");
-      
-      
-      
+
+
+
   //  } else if(inBorder(pX+(3*pWidth/4)-(pWidth/6), pX+(3*pWidth/4)-(pWidth/6)+(pWidth/3),
   //                     pY+(pHeight*5/8), pY+(pHeight*5/8)+(pHeight/6))) {
   //    println("no");
   //    prompt = false;
   //  }
   //}
-  void addBook(String bookTitle){
+  void addBook(String bookTitle) {
     JSONArray values;
     RetrieveData r = new RetrieveData();
-    try{
-      String data = r.retrieveData("http://localhost:8080/all");
+    try {
+      String data = r.retrieveData(host + "all");
       values = parseJSONArray(data);
-      if (values == null){
+      if (values == null) {
         println("JSONArray could not be parsed");
-      }
-      else{
-      int id;
-      String author;
-      int copyright;
-      String description;
-      String image;
-      int pageNumber;
-      String title;
-      String sql;
-      //values.get
-      if (db.connect()){
-      for (int i = 0; i < values.size(); i++){
-        if (values.getJSONObject(i).getString("title").equals(bookTitle)){
-          id = values.getJSONObject(i).getInt("id");          
-          author = values.getJSONObject(i).getString("author");
-          copyright = values.getJSONObject(i).getInt("copyright");
-          description = values.getJSONObject(i).getString("description");
-          image = values.getJSONObject(i).getString("image");
-          pageNumber = values.getJSONObject(i).getInt("pageNumber");
-          title = values.getJSONObject(i).getString("title");
-          sql = "INSERT INTO Book VALUES(" + id + ", '" + author + "', " + copyright + ", '" + description + "', '" + image + "', " + pageNumber + ", '" + title + "')";
-          //sql = ".tables";
-          db.query(sql);
+      } else {
+        int id;
+        String author;
+        int copyright;
+        String description;
+        String image;
+        int pageNumber;
+        String title;
+        String sql;
+        if (db.connect()) {
+          for (int i = 0; i < values.size(); i++) {
+            if (values.getJSONObject(i).getString("title").equals(bookTitle)) {
+              id = values.getJSONObject(i).getInt("id");          
+              author = values.getJSONObject(i).getString("author");
+              copyright = values.getJSONObject(i).getInt("copyright");
+              description = values.getJSONObject(i).getString("description");
+              image = values.getJSONObject(i).getString("image");
+              pageNumber = values.getJSONObject(i).getInt("pageNumber");
+              title = values.getJSONObject(i).getString("title");
+              sql = "INSERT INTO Book VALUES(" + id + ", '" + author + "', " + copyright + ", '" + description + "', '" + image + "', " + pageNumber + ", '" + title + "')";
+              db.query(sql);
+            }
+          }
+          data = r.retrieveData(host + "allpages");
+          values = parseJSONArray(data);
+
+          int pageID;
+          String audioFile;
+          String pageImage;
+          int pagePageNumber;
+          String text;
+          int bookID;
+          for (int i = 0; i < values.size(); i++) {
+            if (values.getJSONObject(0).getJSONObject("book").getString("title").equals(bookTitle)) {
+              
+              
+              
+              pageID = values.getJSONObject(i).getInt("id");
+              audioFile = values.getJSONObject(i).getString("audioFIle");
+              pageImage = values.getJSONObject(i).getString("image");
+              pagePageNumber = values.getJSONObject(i).getInt("pageNumber");
+              text = values.getJSONObject(i).getString("text");
+              bookID = values.getJSONObject(0).getJSONObject("book").getInt("id");
+              
+              
+              sql = "INSERT INTO Page VALUES(" + pageID + ", '" + audioFile + "', '" + pageImage + "' , " + pagePageNumber + ", '" + text + "', " + bookID + ")";
+              db.query(sql);
+              //println(pageID);
+              //println(audioFile);
+              //println(pageImage);
+              //println(pagePageNumber);
+              //println(text);
+              //println("Book id: " + bookID);
+            }
+          }
         }
       }
-      }
-
     }
-  }
-  catch (Exception e){
-    println(e);
-  }
+    catch (Exception e) {
+      println(e);
+ 
+    }
   }
 }

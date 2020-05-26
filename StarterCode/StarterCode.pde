@@ -1,4 +1,4 @@
-// Instead of creating a window object with a book, you have a window object and you have a setter that puts in the book later
+// Instead of creating a window object with a book, you have a window object and you have a setter that puts in the book later //<>//
 // Put all visual stuff inside a second method
 
 import de.bezier.data.sql.*;
@@ -10,6 +10,8 @@ int currentPage;
 public static boolean inLibrary = true;
 public static boolean inWindow = false;
 public static boolean inStore = false;
+ArrayList<Page> prePageArray;
+ArrayList<Page> pageArray;
 
 JSONArray values;
 //MySQL db;
@@ -21,63 +23,63 @@ void setup() {
   // This book isn't used otherwise and is not the same as the default book
   String cover1 = "Art Example Two.png";
   String cover2 = "Art Example Three.png";
-  
+
   db = new SQLite(this, "readingapp.db");
-  
-  Page[] p = {new Page("I ran.", "pixil-frame-0.png", color(255, 255, 255)), new Page("I ran2.", "img2.png", color(255, 255, 255))};
-  Page[] p2 = {new Page("Text", "Art Example One.png", color(0, 0, 0))};
-  Book b1 = new Book("Test", 2, p, cover1);
+
+  //Page[] p = {new Page("I ran.", "pixil-frame-0.png", color(255, 255, 255)), new Page("I ran2.", "img2.png", color(255, 255, 255))};
+  Page[] p2 = {new Page("Text", "Art Example One.png", color(0, 0, 0), 1)};
+  Book b1 = new Book("Test", 2, p2, cover1);
   //Book b2 = new Book("Test2", 1, p2, cover2);
   //Book b3 = new Book("Test3", 1, p2, cover2);
-  
+  pageArray = new ArrayList<Page>();
+  prePageArray = new ArrayList<Page>();
+
   w = new Window(b1);
   l = new Library(this);
   s = new Store(this);
-  
-  currentPage = l.getCurrentPage();
-  
-  RetrieveData r = new RetrieveData();
-  try{
-    println(r.retrieveData("http://localhost:8080/all"));
-    String data = r.retrieveData("http://localhost:8080/all");
-    values = parseJSONArray(data);
-    if (values == null){
-      println("JSONArray could not be parsed");
-    }
-    else{
-      //String book = values.getString(1);
-      // this should just repeat until all books are added
-      
-      // book 1
-      /*print(values.getJSONObject(0).getString("title"));
-      JSONObject book = values.getJSONObject(0);
-      Book b4 = new Book(book.getString("title"), book.getInt("pageNumber"), p, ("data/"+book.getString("image")));
-      l.addBook(b4);*/
-      
-      // local database
-      
-      
-      //example of adding data to the database
-      /*if (db.connect()){
-        print("connected");
-        db.query("INSERT INTO User VALUES (0, 'Max Norman', 'Rush')");
-        db.close();
-      }*/
-      
-     
-      // book 2
-      /*book = values.getJSONObject(1);
-      b4 = new Book(book.getString("title"), book.getInt("pageNumber"), p, ("data/"+book.getString("image")));
-      l.addBook(b4);*/
 
+  currentPage = l.getCurrentPage();
+
+  RetrieveData r = new RetrieveData();
+  try {
+    //String data = r.retrieveData("http://localhost:8080/all");
+    //values = parseJSONArray(data);
+    //if (values == null) {
+    //  println("JSONArray could not be parsed");
+    //} else {}
+    if (db.connect()) {
+      db.query("SELECT * FROM Page");
+      while (db.next()) {
+        prePageArray.add(new Page(db.getString("text"), db.getString("image"), color(0, 0, 0), db.getInt("bookid")));
+      }
+      for (int i = 0; i < prePageArray.size(); i++){
+        if (!containsPage(prePageArray.get(i), pageArray)){
+          pageArray.add(prePageArray.get(i));
+          println(prePageArray.get(i).getText());
+        }
+      }
+      db.query("SELECT * FROM Book");
+      while (db.next()) {
+        ArrayList<Page> thisBook = new ArrayList<Page>();
+        for (int i = 0; i < pageArray.size(); i++) {
+          if (db.getInt("id") == (pageArray.get(i).getBookID())) {
+                thisBook.add(pageArray.get(i));
+          }
+        }
+        Page[] pages = new Page[thisBook.size()];
+        for (int i = 0; i < pages.length; i++) {
+          pages[i] = thisBook.get(i);
+        }
+        l.addBook(new Book(db.getString("title"), 0, pages, db.getString("image")));
+      }
     }
-    
-  }catch (Exception e){ //<>//
+  }
+  catch (Exception e) {
     println(e);
   }
-  
+
   background(0, 0, 0);
-  
+
   //l.addBook(b1);
   //l.addBook(b2);
   //l.addBook(b3);
@@ -107,65 +109,73 @@ void draw() {
 }
 
 void mousePressed() {
-  if(inWindow) {
+  if (inWindow) {
     w.mousePressed();
   }
 }
 
 void mouseReleased() {
-  if(inWindow) {
+  if (inWindow) {
     w.mouseReleased();
   }
 }
 
 void mouseClicked() {
-  if(inStore) {
+  if (inStore) {
     //s.mouseClicked();
   }
 }
 
 public void controlEvent(ControlEvent e) {
-    if(e.getController().getName().equals("Clear")) {
-      l.clearSearch();
-      s.clearSearch();
+  if (e.getController().getName().equals("Clear")) {
+    l.clearSearch();
+    s.clearSearch();
+  }
+  if (e.getController().getName().equals("Store")) {
+    for (Controller c : l.widgets) {
+      c.setVisible(false);
     }
-    if(e.getController().getName().equals("Store")) {
-      for(Controller c : l.widgets) {
-        c.setVisible(false);
-      }
-      inLibrary = false;
-      inStore = true;
+    inLibrary = false;
+    inStore = true;
+  }
+  if (e.getController().getName().equals("Library")) {
+    for (Controller c : s.widgets) {
+      c.setVisible(false);
     }
-    if(e.getController().getName().equals("Library")) {
-      for(Controller c : s.widgets) {
-        c.setVisible(false);
-      }
-      inStore = false;
-      inLibrary = true;
-    }
+    inStore = false;
+    inLibrary = true;
+  }
 }
 
-public void getData(){
-      int id;
-      String author;
-      int copyright;
-      String description;
-      String image;
-      int pageNumber;
-      String title;
-      String sql;
-      if (db.connect()) {
-        println("Total number of items in the cloud: " + values.size());
-        for (int i = 0; i < values.size(); i++){
-          id = values.getJSONObject(i).getInt("id");          
-          author = values.getJSONObject(i).getString("author");
-          copyright = values.getJSONObject(i).getInt("copyright");
-          description = values.getJSONObject(i).getString("description");
-          image = values.getJSONObject(i).getString("image");
-          pageNumber = values.getJSONObject(i).getInt("pageNumber");
-          title = values.getJSONObject(i).getString("title");
-          sql = "INSERT INTO BOOK VALUES(" + id + ", '" + author + "', " + copyright + ", '" + description + "', '" + image + "', " + pageNumber + ", '" + title + "')";
-          db.query(sql);
-        }
-      }
+public void getData() {
+  int id;
+  String author;
+  int copyright;
+  String description;
+  String image;
+  int pageNumber;
+  String title;
+  String sql;
+  if (db.connect()) {
+    println("Total number of items in the cloud: " + values.size());
+    for (int i = 0; i < values.size(); i++) {
+      id = values.getJSONObject(i).getInt("id");          
+      author = values.getJSONObject(i).getString("author");
+      copyright = values.getJSONObject(i).getInt("copyright");
+      description = values.getJSONObject(i).getString("description");
+      image = values.getJSONObject(i).getString("image");
+      pageNumber = values.getJSONObject(i).getInt("pageNumber");
+      title = values.getJSONObject(i).getString("title");
+      sql = "INSERT INTO BOOK VALUES(" + id + ", '" + author + "', " + copyright + ", '" + description + "', '" + image + "', " + pageNumber + ", '" + title + "')";
+      db.query(sql);
+    }
+  }
+}
+boolean containsPage(Page p, ArrayList<Page> ps){
+  for (int i = 0; i < ps.size(); i++){
+    if (ps.get(i).getText().equals(p.getText())){
+      return true;
+    }
+  }
+  return false;
 }

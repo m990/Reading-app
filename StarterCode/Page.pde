@@ -3,18 +3,21 @@ class Page {
   private PImage illustration; 
   private color bgColor;
   private Audio audio;
+  private int bookID;
   
-  public Page(String text, String pFile, color bgColor){
+  public Page(String text, String pFile, color bgColor, int bookID){
     this.text = text;
     this.illustration = loadImage(pFile);
     this.bgColor = bgColor;
+    this.bookID = bookID;
   }
   
-  public Page(String text, String pFile, color bgColor, String audioPath){
+  public Page(String text, String pFile, color bgColor, String audioPath, int bookID){
     this.text = text;
     this.illustration = loadImage(pFile);
     this.bgColor = bgColor;
     audio = new Audio(audioPath);
+    this.bookID = bookID;
   }
   
   // Getters and setters -- text
@@ -46,5 +49,12 @@ class Page {
    if (audio != null) {
     audio.startSound(); 
    }
+  }
+  // Getters and setters -- book id
+  int getBookID(){
+    return bookID;
+  }
+  void setBookID(int newBookID){
+    bookID = newBookID;
   }
 }

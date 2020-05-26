@@ -43,7 +43,7 @@ class Library {
     books = new TreeMap<String, Book>();
 
     // Add one book, which is an instructions manual, so the program doesn't throw an error when generating the library.
-    Page[] examplePages = {new Page("Access books in your library.", "click on books.png", color(255, 255, 255)), new Page("Switch pages by using the side arrows.", "use the side arrows.png", color(255, 255, 255)), new Page("Return to the library by clicking exit.", "click exit.png", color(255, 255, 255))};
+    Page[] examplePages = {new Page("Access books in your library.", "click on books.png", color(255, 255, 255), 0), new Page("Switch pages by using the side arrows.", "use the side arrows.png", color(255, 255, 255), 0), new Page("Return to the library by clicking exit.", "click exit.png", color(255, 255, 255), 0)};
     books.put("User Guide", new Book("User Guide", 3, examplePages, "Centered? User Guide Title.png"));
     
     spot = 0;

@@ -102,7 +102,7 @@ class Window {
     //displaying buttons
     stroke(0, 0, 0);
     fill(192, 192, 192);
-    if(back) { //<>//
+    if(back) { //<>// //<>//
       if(!buttonClicked) {
         fill(buttonColor);
         triangle(buttonX, buttonY+(buttonHeight/2), buttonX+buttonWidth, buttonY+buttonHeight, buttonX+buttonWidth, buttonY);
