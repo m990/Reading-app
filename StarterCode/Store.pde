@@ -7,7 +7,7 @@ class Store {
   Button clear;
   Button toLibrary;
   String bookTitle;
-  
+
   String host = "http://ec2-13-56-191-183.us-west-1.compute.amazonaws.com:8080/";
 
 
@@ -30,6 +30,22 @@ class Store {
   float pHeight = height/3;
   float pX = width/2-(pWidth/2);
   float pY = height/2-(pHeight/2);
+
+  int id;
+  String author;
+  int copyright;
+  String description;
+  String image;
+  int pageNumber;
+  String title = "";
+  String sql;
+  int pageID;
+  String audioFile;
+  String pageImage;
+  int pagePageNumber;
+  String text;
+  int bookID;
+  ArrayList<Page> pages;
 
   public Store(PApplet p) {
     cp5 = new ControlP5(p);
@@ -79,8 +95,7 @@ class Store {
     prompt = false;
 
     try {
-      println(rd.retrieveData("http://localhost:8080/all"));
-      String data = rd.retrieveData("http://localhost:8080/all");
+      String data = rd.retrieveData(host + "/all");
       values = parseJSONArray(data);
       if (values == null) {
         println("JSONArray could not be parsed");
@@ -312,14 +327,6 @@ class Store {
       if (values == null) {
         println("JSONArray could not be parsed");
       } else {
-        int id;
-        String author;
-        int copyright;
-        String description;
-        String image;
-        int pageNumber;
-        String title;
-        String sql;
         if (db.connect()) {
           for (int i = 0; i < values.size(); i++) {
             if (values.getJSONObject(i).getString("title").equals(bookTitle)) {
@@ -337,33 +344,28 @@ class Store {
           data = r.retrieveData(host + "allpages");
           values = parseJSONArray(data);
 
-          int pageID;
-          String audioFile;
-          String pageImage;
-          int pagePageNumber;
-          String text;
-          int bookID;
+
           for (int i = 0; i < values.size(); i++) {
+            pages = new ArrayList<Page>();
             if (values.getJSONObject(0).getJSONObject("book").getString("title").equals(bookTitle)) {
-              
-              
-              
+
+
+
               pageID = values.getJSONObject(i).getInt("id");
               audioFile = values.getJSONObject(i).getString("audioFIle");
               pageImage = values.getJSONObject(i).getString("image");
               pagePageNumber = values.getJSONObject(i).getInt("pageNumber");
               text = values.getJSONObject(i).getString("text");
               bookID = values.getJSONObject(0).getJSONObject("book").getInt("id");
-              
-              
-              sql = "INSERT INTO Page VALUES(" + pageID + ", '" + audioFile + "', '" + pageImage + "' , " + pagePageNumber + ", '" + text + "', " + bookID + ")";
+
+
+
+
+              sql = "INSERT INTO Page VALUES(" + pageID + ", '" + audioFile + "', '" + pageImage + "' , " + pagePageNumber + ", '" + text + "', " + bookID + ")"; //<>//
               db.query(sql);
-              //println(pageID);
-              //println(audioFile);
-              //println(pageImage);
-              //println(pagePageNumber);
-              //println(text);
-              //println("Book id: " + bookID);
+
+              // String text, String pFile, color bgColor, int bookID
+              pages.add(new Page(text, pageImage, color(0, 0, 0), bookID));
             }
           }
         }
@@ -371,7 +373,47 @@ class Store {
     }
     catch (Exception e) {
       println(e);
- 
     }
+    title = title.replaceAll(" ", "%20");
+    try {
+      BufferedInputStream in = new BufferedInputStream(new URL(host +"download/file/" + title + "/" + image).openStream());
+      FileOutputStream fileOutputStream = new FileOutputStream("Desktop/Reading-app/StarterCode/data/" + image);
+      byte dataBuffer[] = new byte[1024];
+      int bytesRead;
+      while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
+        fileOutputStream.write(dataBuffer, 0, bytesRead);
+      }
+    }
+    catch (IOException e) {
+      e.printStackTrace();
+    }
+    ArrayList<Page> singlePages = new ArrayList<Page>();
+    for (int i = 0; i < pages.size(); i++) {
+      if (!containsPage(pages.get(i), pageArray)) {
+        singlePages.add(pages.get(i));
+      }
+    }
+    for (int i = 0; i < singlePages.size(); i++) {
+      try {
+        BufferedInputStream in = new BufferedInputStream(new URL(host +"download/file/" + title + "/" + "/ID" + bookID + "Pages/PageID" + pageID + "/" + singlePages.get(i).getIllustration()).openStream());
+        FileOutputStream fileOutputStream = new FileOutputStream("Desktop/Reading-app/StarterCode/data/" + singlePages.get(i).getIllustration());
+        byte dataBuffer[] = new byte[1024];
+        int bytesRead;
+        while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
+          fileOutputStream.write(dataBuffer, 0, bytesRead);
+        }
+      }
+      catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+  boolean containsPage(Page p, ArrayList<Page> ps) {
+    for (int i = 0; i < ps.size(); i++) {
+      if (ps.get(i).getText().equals(p.getText())) {
+        return true;
+      }
+    }
+    return false;
   }
 }

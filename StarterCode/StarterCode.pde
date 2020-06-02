@@ -40,7 +40,7 @@ void setup() {
 
   currentPage = l.getCurrentPage();
 
-  RetrieveData r = new RetrieveData();
+  // RetrieveData r = new RetrieveData();
   try {
     //String data = r.retrieveData("http://localhost:8080/all");
     //values = parseJSONArray(data);
@@ -144,31 +144,6 @@ public void controlEvent(ControlEvent e) {
     }
     inStore = false;
     inLibrary = true;
-  }
-}
-
-public void getData() {
-  int id;
-  String author;
-  int copyright;
-  String description;
-  String image;
-  int pageNumber;
-  String title;
-  String sql;
-  if (db.connect()) {
-    println("Total number of items in the cloud: " + values.size());
-    for (int i = 0; i < values.size(); i++) {
-      id = values.getJSONObject(i).getInt("id");          
-      author = values.getJSONObject(i).getString("author");
-      copyright = values.getJSONObject(i).getInt("copyright");
-      description = values.getJSONObject(i).getString("description");
-      image = values.getJSONObject(i).getString("image");
-      pageNumber = values.getJSONObject(i).getInt("pageNumber");
-      title = values.getJSONObject(i).getString("title");
-      sql = "INSERT INTO BOOK VALUES(" + id + ", '" + author + "', " + copyright + ", '" + description + "', '" + image + "', " + pageNumber + ", '" + title + "')";
-      db.query(sql);
-    }
   }
 }
 boolean containsPage(Page p, ArrayList<Page> ps){
